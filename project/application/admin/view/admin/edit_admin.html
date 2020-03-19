@@ -1,0 +1,118 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        账号管理
+        <span class="c-gray en">
+            /
+        </span>
+        角色管理
+        <span class="c-gray en">
+            /
+        </span>
+        添加角色
+    </nav>
+    <article class="Hui-admin-page-container">
+        <form class="form form-horizontal" id="form-article-add" enctype="multipart/form-data" action="" method="post">
+            <div class="row clearfix">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>账号：</label>
+                <div class="form-controls col-xs-8 col-sm-9">
+                    <input type="text" class="input-text" value="{$admin['name']}" placeholder="" id="name" name="name">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>密码：</label>
+                <div class="form-controls col-xs-8 col-sm-9">
+                    <input type="password" class="input-text" value="" placeholder="留空不更新" id="password"
+                           name="password">
+                </div>
+            </div>
+            <div class="row clearfix">
+                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色：</label>
+                <div class="form-controls col-xs-8 col-sm-9">
+                    <select class="select" id="statusifyID" name="statusifyID">
+                        {foreach $list as $key=>$vo }
+                        {if $vo.roleid == $admin.role}
+                        <option value="{$vo.roleid}" selected="selected">
+                            {$vo.rolename}
+                        </option>
+                        {else /}
+                        <option value="{$vo.roleid}">
+                            {$vo.rolename}
+                        </option>
+                        {/if}
+
+                        {/foreach}
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" name="id" value="{$admin['id']}">
+
+            <div class="row clearfix">
+                <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                    <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>提交
+                    </button>
+                </div>
+            </div>
+        </form>
+    </article>
+</div>
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        // 表单提交验证
+        $("#form-article-add").validate({
+            rules: {
+                name: {
+                    required: true,
+                },
+                statusifyID: {
+                    required: true,
+                }
+
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+
+                $(form).ajaxSubmit({
+                    url: "{:url('Admin/edit_admin_s')}",
+                    type: 'post',
+                    dataType: 'json',
+                    beforeSubmit: function () {
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg(data.msg, {
+                                    icon: 1,
+                                    shade: 0.01,
+                                    time: 2000
+                                },
+                                function () {
+                                    top.location.reload();
+
+                                });
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    },
+                    clearForm: false,
+                    //禁止清楚表单
+                    resetForm: false //禁止重置表单
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

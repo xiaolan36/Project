@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>收单</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta http-equiv="refresh" content="60">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__WJS__/mui.min.js"></script>
+    <script type="text/javascript" src="__COM__/layer/layer.js"></script>
+    <script type="text/javascript" src="__COM__/js/index.js"></script>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style>
+        .mui-bar ~ .mui-content .mui-fullscreen {
+            top: calc(44px + 166px) !important;
+            height: auto;
+        }
+
+        .mui-pull-top-tips {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            margin-left: -25px;
+            width: 40px;
+            height: 40px;
+            border-radius: 100%;
+        }
+
+        .mui-bar ~ .mui-pull-top-tips {
+            top: 24px;
+        }
+
+        .mui-pull-top-wrapper {
+            width: 42px;
+            height: 42px;
+            display: block;
+            text-align: center;
+            background-color: #efeff4;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            background-clip: padding-box;
+            box-shadow: 0 4px 10px #bbb;
+            overflow: hidden;
+        }
+
+        .mui-pull-top-tips.mui-transitioning {
+            -webkit-transition-duration: 200ms;
+            transition-duration: 200ms;
+        }
+
+        .mui-pull-top-tips .mui-pull-loading {
+            /*-webkit-backface-visibility: hidden;
+                -webkit-transition-duration: 400ms;
+                transition-duration: 400ms;*/
+
+            margin: 0;
+        }
+
+        .mui-pull-top-wrapper .mui-icon,
+        .mui-pull-top-wrapper .mui-spinner {
+            margin-top: 7px;
+        }
+
+        .mui-pull-top-wrapper .mui-icon.mui-reverse {
+            /*-webkit-transform: rotate(180deg) translateZ(0);*/
+        }
+
+        .mui-pull-bottom-tips {
+            text-align: center;
+            background-color: #efeff4;
+            font-size: 15px;
+            line-height: 40px;
+            color: #777;
+        }
+
+        .mui-pull-top-canvas {
+            overflow: hidden;
+            background-color: #fafafa;
+            border-radius: 40px;
+            box-shadow: 0 4px 10px #bbb;
+            width: 40px;
+            height: 40px;
+            margin: 0 auto;
+        }
+
+        .mui-pull-top-canvas canvas {
+            width: 40px;
+        }
+
+        .mui-slider-indicator.mui-segmented-control {
+            background-color: #fff;
+        }
+
+        .mui-table-view-cell:after {
+            background-color: #34313d;
+        }
+
+        .mui-slider .mui-segmented-control.mui-segmented-control-inverted ~ .mui-slider-group .mui-slider-item {
+            border: none;
+        }
+
+        .mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+            width: 100%;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+            color: #999;
+            padding: 0;
+            text-align: center;
+            width: 33.33%;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+            font-weight: bold;
+            color: #1A1A1A;
+            position: relative;
+        }
+
+        .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active::after {
+            position: absolute;
+            left: 50%;
+            margin-left: -21px;
+            bottom: 0;
+            width: 42px;
+            height: .04rem;
+            border-radius: .02rem;
+            content: '';
+            background-color: #FF5536;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    <h1 class="mui-title head">记录</h1>
+</header>
+
+<div class="mui-content" >
+    <img src="/static/home/wap/images/banner2.jpg" style="width:100%;margin-top: 0;">
+    <div id="slider" class="mui-slider mui-fullscreen" style="top: 0;">
+        <div id="sliderSegmentedControl"
+             class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <div class="mui-scroll">
+                <a class="mui-control-item mui-active headlist" id="itemmobilea" href="javascript:void(0);">
+                    待处理
+                </a>
+                <a class="mui-control-item headlist" id="itemmobilec" href="javascript:void(0);">
+                    已完成
+                </a>
+                <a class="mui-control-item headlist" id="itemmobileb" href="javascript:void(0);">
+                    冻结中
+                </a>
+            </div>
+        </div>
+        <div class="mui-slider-group" id="item1mobile" style="display:block;">
+            <div class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+
+                        {volist name="list" id="info" empty="暂时没有数据" }
+                        {eq name="info.status" value="1"}
+                        <ul class="mui-table-view ullist shoudan-list">
+                            <li class="mui-table-view-cell mui-collapse-content">
+                                <div class="shoudan-left">
+                                    <h4>订单编号:{$info.ordernum}</h4>
+                                    <p><?php echo date("Y-m-d H:i",$info['addtime']);?></p>
+
+                                </div>
+                                <div class="shoudan-right">
+                                    <a onclick="herf_id({$info['id']})">
+                                        去处理</a>
+                                </div>
+                            </li>
+                        </ul>
+                        {/eq}
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mui-slider-group" id="item2mobile" style="display:none;">
+
+            <div class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+                        {volist name="list" id="info" empty="暂时没有数据" }
+                        {eq name="info.status" value="2"}
+                        <ul class="mui-table-view ullist shoudan-list">
+                            <li class="mui-table-view-cell mui-collapse-content">
+                                <div class="shoudan-left">
+                                    <h4>订单编号:{$info.ordernum}</h4>
+                                    <h4>冻结：{$info.price}</h4>
+                                    <p><?php echo date("Y-m-d H:i",$info['addtime']);?></p>
+                                </div>
+                                <div class="shoudan-right">
+                                    <a href="#" onclick="jiedong({$info['id']})" type="button" class="buttonchakan">点击解冻</a>
+                                </div>
+                            </li>
+                        </ul>
+                        {/eq}
+                        {/volist}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mui-slider-group" id="item3mobile" style="display:none;">
+
+            <div class="mui-slider-item mui-control-content">
+                <div class="mui-scroll-wrapper">
+                    <div class="mui-scroll">
+
+                        {volist name="list" id="info" empty="暂时没有数据" }
+                        {eq name="info.status" value="3"}
+                        <ul class="mui-table-view ullist shoudan-list">
+                            <li class="mui-table-view-cell mui-collapse-content">
+                                <div class="shoudan-left">
+                                    <h4>订单编号:{$info.ordernum}</h4>
+                                    <h4>
+                                        订单金额:{$info.price}</h4>
+                                    <p><?php echo date("Y-m-d H:i",$info['addtime']);?></p>
+                                </div>
+                                <div class="shoudan-fan">
+                                    <?php
+												$a =$info['price'];
+												$b =$info['yjjc'];
+												$c = number_format($a + ($a * $b),2);
+											?>
+                                    <a href="#" type="button" class="buttonchakan">已返<em>￥{$c}</em></a>
+                                </div>
+                            </li>
+                        </ul>
+                        {/eq}
+                        {/volist}
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    $("#itemmobilea").click(function () {
+        $("#item1mobile").show();
+        $("#item2mobile").hide();
+        $("#item3mobile").hide();
+        $("#itemmobilea").addClass('mui-active');
+        $("#itemmobileb").removeClass('mui-active');
+        $("#itemmobilec").removeClass('mui-active');
+
+    });
+    $("#itemmobileb").click(function () {
+        $("#item1mobile").hide();
+        $("#item2mobile").show();
+        $("#item3mobile").hide();
+        $("#itemmobileb").addClass('mui-active');
+        $("#itemmobilea").removeClass('mui-active');
+        $("#itemmobilec").removeClass('mui-active');
+
+    });
+    $("#itemmobilec").click(function () {
+        $("#item1mobile").hide();
+        $("#item2mobile").hide();
+        $("#item3mobile").show();
+        $("#itemmobilec").addClass('mui-active');
+        $("#itemmobileb").removeClass('mui-active');
+        $("#itemmobilea").removeClass('mui-active');
+
+    });
+
+    function herf_id(id) {
+        window.location.href = "/single/order_info/" + id;
+    }
+
+    function jiedong(id) {
+        $.post("{:url('/single/order_thaw')}",
+            {'id': id},
+            function (data) {
+                data=JSON.parse(data)
+                if (data.status == 1) {
+                    layer.msg(data.msg);  //,data.url);
+                    setTimeout(function (args) {
+                        window.location.href = "{:url('/single/single_info')}";
+                    }, 3000);
+                } else {
+                    layer.msg(data.msg);
+                }
+            });
+    }
+
+    (function ($) {
+        $(".mui-scroll-wrapper").scroll({});
+    })(mui);
+</script>
+
+</html>

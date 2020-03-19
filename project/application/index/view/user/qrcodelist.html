@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://103.200.29.54/index.html#tabbar-with-contact -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title></title>
+    
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+	<link href="__WCSS__/app.css" rel="stylesheet">
+	<link href="__WCSS__/userindex.css" rel="stylesheet">
+
+
+</head>
+<body style="background:#f2f2f2;" class="mui-ios mui-ios-11 mui-ios-11-0">
+		
+			<!--我的-->
+	<div id="tabbar-with-contact" class="mui-control-content mui-active">
+		<header class="mui-bar mui-bar-nav header">
+			<div style="width:10%;float:left;">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+			</div>
+			<div style="width:80%;float:left;"><h1 class="mui-title h1">添加二维码</h1></div>
+			<div style="width:10%;float:right;text-align:center;" id="goWithdraw0">
+				<img src="../Public/home/wap/images/file1.png" style=" height:36px; margin: 10%;">
+			</div>	
+	
+		</header>
+
+
+	</div>
+		
+	
+<nav class="mui-bar mui-bar-tab" style="background:#fff;">
+
+	<a class="mui-tab-item" href="{:U('Index/index')}">
+		<span class="mui-icon mui-icon-home"></span>
+		<span class="mui-tab-label">首页</span>
+	</a>
+	<a class="mui-tab-item "  href="{:U('Index/qdgame')}">
+		<span class="mui-icon mui-icon-email"></span>
+		<span class="mui-tab-label">抢单</span>
+	</a>
+	
+	<a class="mui-tab-item"  href="##">
+		<span class="mui-icon mui-icon-gear"></span>
+		<span class="mui-tab-label">收单</span>
+	</a>
+	<a class="mui-tab-item mui-active" href="{:U('User/index')}">
+		<span class="mui-icon mui-icon-contact"></span>
+		<span class="mui-tab-label">我的</span>
+	</a>
+</nav>
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="__COM__/layer/layer.js" ></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+
+<script type="text/javascript">
+	$("#goWithdraw").click(function(){
+		window.location.href="{:U('User/addqrocde')}"
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<link rel="Bookmark" href="favicon.ico" >
+	<link rel="Shortcut Icon" href="favicon.ico" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="lib/html5.js"></script>
+	<script type="text/javascript" src="lib/respond.min.js"></script>
+	<![endif]-->
+	<link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/h-ui/css/H-ui.min.css" />
+	<link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/h-ui.admin.pro/css/h-ui.admin.pro.min.css" />
+	<link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/lib/Hui-iconfont/1.0.9/iconfont.css" />
+	<link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/business/css/style.css" />
+	<!--[if IE 6]>
+	<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+	<script>DD_belatedPNG.fix('*');</script>
+	<![endif]-->
+	<!--/meta 作为公共模版分离出去-->
+
+	<title>修改轮播图 </title>
+</head>
+<body>
+	<article class="Hui-admin-page-container">
+		<form class="form form-horizontal" id="form-article-add" enctype="multipart/form-data" action="" method="post">
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品名称：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$list['name']}" placeholder="" id="name" name="name">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品金额：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$list['price']}" placeholder="" id="price" name="price">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>商品商家：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<input type="text" class="input-text" value="{$list['shop']}" placeholder="" id="shop" name="shop">
+				</div>
+			</div>
+			<div class="row clearfix">
+				<label class="form-label col-xs-4 col-sm-2">图片连接：</label>
+				<div class="form-controls col-xs-8 col-sm-9">
+					<div class="form-controls col-xs-8 col-sm-9">
+						<input type="text" class="input-text" value="{$list['url']}" placeholder="" id="url" name="url">
+					</div>
+					<?php echo html_entity_decode(trim($list['url']),ENT_QUOTES,"UTF-8"); ?>
+				</div>
+			</div>
+			<div class="row clearfix">
+				<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+					<input type="hidden" name="id"  value="{$list.id}">
+					<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				</div>
+			</div>
+		</form>
+	</article>
+
+	<!--_footer 作为公共模版分离出去-->
+	<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="__ADMINPUBLIC__/lib/layer/3.1.1/layer.js"></script>
+	<script type="text/javascript" src="__ADMINPUBLIC__/static/h-ui/js/H-ui.min.js"></script>
+	<script type="text/javascript" src="__ADMINPUBLIC__/static/h-ui.admin.pro/js/h-ui.admin.pro.min.js"></script>
+	<!--/_footer /作为公共模版分离出去-->
+
+	<!--请在下方写此页面业务相关的脚本-->
+	<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+	<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+	<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+	<script type="text/javascript" src="__ADMINPUBLIC__/static/business/js/main.js"></script>
+	<script type="text/javascript">
+
+		function reads(obj) {
+		    var file = obj.files[0];
+		    var reader = new FileReader();
+		    reader.readAsDataURL(file);
+		    reader.onload = function(ev) {
+		      $("#backimg").attr("src", ev.target.result);
+		    }
+	  	}
+	  	
+		$(function(){
+
+			// 复选框样式
+			$('.skin-minimal input').iCheck({
+				checkboxClass: 'icheckbox-blue',
+				radioClass: 'iradio-blue',
+				increaseArea: '20%'
+			});
+
+			
+
+			// 文章摘要
+			$(".textarea-article").Huitextarealength({
+				minlength: 10,
+				maxlength: 500
+			});
+
+
+
+			// 表单提交验证
+			$("#form-article-add").validate({
+				rules: {
+					name: {
+						required: true,
+					},
+					price: {
+						required: true,
+					},
+					shop: {
+						required: true,
+					},
+
+				},
+				onkeyup: false,
+				focusCleanup: true,
+				success: "valid",
+				submitHandler: function(form){
+					$(form).ajaxSubmit({
+						url: "{:url('Goods/goods_edit_s')}",
+			            type: 'post',
+			            dataType: 'json',
+			            beforeSubmit: function () {},
+			            success: function (data) {
+			                if (data.code==200) {
+			                	layer.msg(data.msg, {icon: 1,shade: 0.01,time:2000},function(){
+	                              top.location.reload();
+
+	                            });
+			                }else{
+			                	layer.msg(data.msg);
+			                }
+			            },
+			            clearForm: false,//禁止清楚表单
+			            resetForm: false //禁止重置表单
+
+					});
+				}
+			});
+		});
+	</script>
+	<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

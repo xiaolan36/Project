@@ -1,0 +1,184 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        账号管理
+        <span class="c-gray en">
+            /
+        </span>
+        角色管理
+        <span class="c-gray en">
+            /
+        </span>
+        添加角色
+    </nav>
+    <article class="clearfix pd-20">
+        <div class="panel">
+            <div class="panel-body">
+                <form class="form form-horizontal" id="form-article-add" enctype="multipart/form-data" action=""
+                      method="post">
+                    <div id="tab-system" class="HuiTab">
+                        <div class="tabBar cl"><span>基本设置</span><span>权限设置</span></div>
+                        <div class="tabCon">
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>角色名称 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" class="input-text" value="" placeholder="" id="rolename"
+                                           name="rolename">
+
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>备注 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" class="input-text" value="" placeholder="" id="role_remarks"
+                                           name="role_remarks">
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tabCon">
+
+                            <div class="formControls col-xs-8 col-sm-9" style="margin-top: 15px">
+                                {volist name="menu_list" id="vo"}
+                                {eq name="vo.parentid" value="0"}
+
+                                <dl class="permission-list">
+                                    <div class="per permission-list">
+                                        <dt style="background-color: #efefef;padding: 5px 10px;">
+                                            <label>
+                                                <input type="checkbox" name="Character[]"  value="<?php echo $vo['id'] ?>">
+                                                <?php echo $vo['name']; ?>
+                                            </label>
+                                        </dt>
+
+                                        <dd style="padding: 10px;padding-left: 30px;">
+                                            {volist name="menu_list" id="vs" }
+                                            {switch vs.parentid}
+                                            {case $vo.id}
+
+                                            <label class="">
+                                                <input type="checkbox" name="Character[]"  value="<?php echo $vs['id'] ?>">
+                                                <?php echo $vs['name']; ?>
+                                            </label>
+
+                                            {/case}
+                                            {/switch}
+                                            {/volist}
+                                        </dd>
+                                    </div>
+                                </dl>
+                                {/eq}
+                                {/volist}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                                <button class="btn btn-primary radius" type="submit"><i
+                                        class="Hui-iconfont">&#xe632;</i>提交
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</div>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        $(".permission-list dt input:checkbox").click(function(){
+            $(this).closest("dl").find("dd input:checkbox").prop("checked",$(this).prop("checked"));
+        });
+        $(".per dd input:checkbox").click(function(){
+            var l =$(this).parent().parent().find("input:checked").length;
+            var l2=$(this).parents(".permission-list").find(".per dd").find("input:checked").length;
+            if($(this).prop("checked")){
+                $(this).closest("dl").find("dt input:checkbox").prop("checked",true);
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",true);
+            }
+            else{
+                if(l==0){
+                    $(this).closest("dl").find("dt input:checkbox").prop("checked",false);
+                }
+                if(l2==0){
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked",false);
+                }
+            }
+        });
+
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+
+        $("#tab-system").Huitab();
+
+        // 表单提交验证
+        $("#form-article-add").validate({
+            rules: {
+                rolename: {
+                    required: true,
+                },
+                role_remarks: {
+                    required: true,
+                },
+                Character:{
+                    required: true,
+                }
+
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+
+                $(form).ajaxSubmit({
+                    url: "{:url('Admin/add_role')}",
+                    type: 'post',
+                    dataType: 'json',
+                    beforeSubmit: function () {
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg(data.msg, {
+                                    icon: 1,
+                                    shade: 0.01,
+                                    time: 2000
+                                },
+                                function () {
+                                    top.location.reload();
+
+                                });
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    },
+                    clearForm: false,
+                    //禁止清楚表单
+                    resetForm: false //禁止重置表单
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

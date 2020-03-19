@@ -1,0 +1,30 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <article class="Hui-admin-content clearfix">
+
+        <div class="panel">
+            <div class="panel-body" 发布="">
+
+                <p>
+
+                </p>
+                <table class="table table-border table-bordered table-bg mt-20">
+                    <thead>
+                        <tr>
+                            <th colspan="2" scope="col">
+                                服务器信息
+                            </th>
+                        </tr>
+                    </thead>
+                     {volist name="info" id="v"}
+                       <tr>
+                          <th>{$key}</th>
+                           <td>{$v}</td>
+                     </tr>             
+                     {/volist}
+                </table>
+            </div>
+        </div>
+    </article>
+</div>

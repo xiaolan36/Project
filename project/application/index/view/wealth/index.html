@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet"/>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style>
+
+        .fangshi {
+            margin: 0;
+            font-family: '微软雅黑';
+            color: #1a1a1a;;
+        }
+
+        .ulfangshi {
+            margin: 60px auto 0;
+            background: transparent;
+            line-height: 2em;
+            width: 6.9rem;
+        }
+
+        .ulfangshi .mui-navigate-right {
+            background-color: #fff;
+            border-radius: .14rem;
+            width: 6.9rem;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    <h1 class="mui-title headh1">充值</h1>
+    <a class=" mui-icon mui-icon-right-nav mui-pull-right" href="{:url('/wealth/wealth_log')}"
+       style="    margin-top: 5px;font-size: 17px">充值记录</a>
+</header>
+<ul class="mui-table-view ulfangshi notborder">
+    {volist name="card" id="vo" empty="暂时没有充值通道" }
+    <li class="mui-table-view-cell mui-collapse-content" style="margin-top: 10px">
+        <a href="{:url('index/wealth/wealth_card','id='.$vo.id)}" class="mui-navigate-right">
+            <p class="fangshi">{$vo.bankname}</p>
+        </a>
+    </li>
+
+    {/volist}
+
+    <li class="mui-table-view-cell mui-collapse-content" style="margin-top: 25px">
+        <a href="{:url('/wealth/wealth_info')}" class="mui-navigate-right">
+            <p class="fangshi">微信，支付宝转银行卡介绍</p>
+        </a>
+    </li>
+
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>提交订单</title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__COM__/layer/layer.js"></script>
+    <script type="text/javascript" src="__COM__/js/index.js"></script>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <style>
+        #imgs img {
+            width: 25%;
+            height: 25%;
+        }
+    </style>
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    <h1 class="mui-title h1">确认订单</h1>
+</header>
+
+<div class="take mt60">
+    <dl>
+        <a href="#">
+            <dt><img src="__WIMG__/ding.png" alt=""></dt>
+            <dd class="hc-flex hc-flex-column hc-justify-center">
+                <h4> 收货人:<?=$address['username']?><span><?=$address['phone']?></span></h4>
+                <p class=" hide-title"><?=$address['address'].$address['address_info']?></p>
+                <em class="mui-navigate-right"></em>
+            </dd>
+            <input type="hidden" id="address_id" value="<?=$address['id']?>">
+        </a>
+    </dl>
+</div>
+
+<div class="order">
+    <h4>
+        订单编号:{$olist.ordernum}
+    </h4>
+    <dl>
+        <dt class=" hc-flex hc-justify-between" id="imgs">
+            <?php echo html_entity_decode(trim($order['url']),ENT_QUOTES,"UTF-8"); ?>
+            <div class="infos">
+                <h5 class="hide-title">{$order.name}</h5>
+                <p>{$order.shop}</p>
+            </div>
+            <div class="price">
+                <p><span style="color: red">￥{$order.price}</span> x 1</p>
+            </div>
+            <input type="hidden" id="order_id" value="{$olist.id}">
+        </dt>
+
+        <dd><span>本单佣金收入比例：{$olist['yjjc']}</span><span
+                class="hei">￥<?php echo  number_format($olist['price']*$olist['yjjc'],2) ;?></span></dd>
+        <dd><span>本单冻结金额：</span><span>￥{$olist.price}</span></dd>
+        <dd><span>本单给上一级返佣奖励：{$config['team_oneyj']}</span><span
+                class="cheng">￥<?php echo number_format($olist['price']*$olist['yjjc']*$config['team_oneyj'],2) ;?></span></dd>
+        <dd><span>本单给上二级返佣奖励：{$config['team_twoyj']}</span><span
+                class="cheng">￥<?php echo number_format($olist['price']*$olist['yjjc']*$config['team_twoyj'],2) ;?></span></dd>
+        <dd><span>本单给上三级返佣奖励：{$config['team_threeyj']}</span><span
+                class="cheng">￥<?php echo number_format($olist['price']*$olist['yjjc']*$config['team_threeyj'],2) ;?></span></dd>
+    </dl>
+</div>
+<!-- <?=html_entity_decode($order['url'])?> -->
+<div class="butdiv">
+    <button type="button" class="mui-btn mui-btn-danger dangers" id="pipeinnow" onclick="tijiao()">提交订单</button>
+</div>
+</body>
+<script src="__WJS__/webp.js"></script>
+<script>
+
+
+    function tijiao() {
+        // $("#pipeinnow").attr('disabled', true);
+        var id = $("#order_id").val();
+        var address = $("#address_id").val();
+        if (address == '' || address == null) {
+            layer.msg('收货信息不能为空!');
+            return false;
+        }
+        $.ajax({
+            url: '/single/order_send',
+            type: 'post',
+            data: {'id': id},
+            datatype: 'json',
+            success: function (mes) {
+                mes = JSON.parse(mes)
+                if (mes.status == 1) {
+
+                    layer.msg(mes.msg)
+                    setTimeout(function (args) {
+                        window.location.href = "/single/index"
+                    }, 3000);
+
+                } else if (mes.status == 2) {
+                    layer.msg("该订单已被冻结，请解冻后再次提交");  //,data.url);
+                    setTimeout(function (args) {
+                        window.location.href = "{:url('/single/single_info')}";
+                    }, 3000);
+                } else if (mes.status == 3) {
+                    layer.msg("该订单已提交，请勿重新提交");  //,data.url);
+                    setTimeout(function (args) {
+                        window.location.href = "{:url('/single/single_info')}";
+                    }, 3000);
+                } else {
+                    msg_alert(mes.message);
+                }
+            }
+        })
+    }
+
+    function canUseWebp() {
+        var elem = document.createElement('canvas');
+        if (!!(elem.getContext && elem.getContext('2d'))) {
+            return elem.toDataURL('image/webp').indexOf('data:image/webp') === 0;
+        } else {
+            return false;
+        }
+    }
+
+    $(function() {
+        if(canUseWebp()) return;
+        var regex = /webp$/
+        $("img").each(function(index) {
+            var src  = $(this).attr('src');
+            if(regex.test($(this).attr('src'))) {
+                src = src.substring(0,src.lastIndexOf('_.webp'));
+                $(this).attr('src',src);
+            }
+        })
+    })
+</script>
+
+</html>
+

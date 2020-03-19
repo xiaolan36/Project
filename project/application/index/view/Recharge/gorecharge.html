@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://103.200.29.54/index.html#tabbar-with-contact -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title></title>
+    
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+	<link href="__WCSS__/app.css" rel="stylesheet">
+	<link href="__WCSS__/userindex.css" rel="stylesheet">
+
+
+</head>
+<body style="background:#f2f2f2;" class="mui-ios mui-ios-11 mui-ios-11-0">
+		
+			<!--我的-->
+	<div id="tabbar-with-contact" class="mui-control-content mui-active">
+		<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+			<h1 class="mui-title h1">选择充值方式</h1>
+		</header>
+
+		<ul class="mui-table-view ullist" style="margin-top: 30px;">
+			<li class="mui-table-view-cell mui-collapse-content">
+				
+				<a href="{:U('Recharge/recharge_alipay')}" class="mui-navigate-right" style=" margin-left: 5%;font-size: 0.9em; bottom: 4px; ">
+					支付宝充值
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-collapse-content">
+				
+				<a href="{:U('Recharge/recharge_wx')}"class="mui-navigate-right" style=" margin-left: 5%;font-size: 0.9em; bottom: 4px; ">
+					微信充值
+				</a>
+			</li>
+			<li class="mui-table-view-cell mui-collapse-content">
+				
+				<a href="{:U('Recharge/recharge_bank')}"class="mui-navigate-right" style=" margin-left: 5%;font-size: 0.9em; bottom: 4px; ">
+					银行卡充值
+				</a>
+			</li>
+
+		</ul>
+	</div>
+		
+	
+<nav class="mui-bar mui-bar-tab" style="background:#fff;">
+
+	<a class="mui-tab-item" href="{:U('Index/index')}">
+		<span class="mui-icon mui-icon-home"></span>
+		<span class="mui-tab-label">首页</span>
+	</a>
+	<a class="mui-tab-item "  href="{:U('Index/qdgame')}">
+		<span class="mui-icon mui-icon-email"></span>
+		<span class="mui-tab-label">抢单</span>
+	</a>
+	
+	<a class="mui-tab-item"  href="##">
+		<span class="mui-icon mui-icon-gear"></span>
+		<span class="mui-tab-label">收单</span>
+	</a>
+	<a class="mui-tab-item mui-active" href="{:U('User/index')}">
+		<span class="mui-icon mui-icon-contact"></span>
+		<span class="mui-tab-label">我的</span>
+	</a>
+</nav>
+</body>
+</html>

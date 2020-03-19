@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+
+    <style>
+        .body {
+            line-height: px;
+        }
+
+        .mui-table-view-cell:after {
+            left: 0px;
+            background-color: #eaeaea;
+        }
+
+        .mui-table-view:before {
+            background-color: #eaeaea;
+        }
+
+        .mui-table-view:after {
+            background-color: #eaeaea;
+        }
+
+        .header {
+            background: #fff;
+            top: 0;
+            box-shadow: 0 0px 0px #ccc;
+            -webkit-box-shadow: 0 0px 0px #ccc;
+        }
+
+        .imgadd {
+            position: absolute;
+            margin-top: 9px;
+            width: 24px;
+            right: 8px;
+        }
+
+        .h1erweima {
+            font-family: '微软雅黑';
+            color: #000;
+        }
+
+        .ul {
+            margin-top: 15%;
+            background: #FFFFFF;
+            line-height: 2em;
+        }
+
+        .p {
+            margin-left: 10%;
+            font-family: '微软雅黑';
+            color: #000;
+        }
+    </style>
+    <script type="text/javascript">
+        //stanislav.it/how-to-prevent-ios-standalone-mode-web-apps-from-opening-links-in-safari
+        if (("standalone" in window.navigator) && window.navigator.standalone) {
+            var noddy, remotes = false;
+            document.addEventListener('click', function (event) {
+                noddy = event.target;
+                while (noddy.nodeName !== "A" && noddy.nodeName !== "HTML") {
+                    noddy = noddy.parentNode;
+                }
+                if ('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)) {
+                    event.preventDefault();
+                    document.location.href = noddy.href;
+                }
+            }, false);
+        }
+    </script>
+</head>
+<body style="background:#f2f2f2;">
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    <a href="{:url('index/User/bank_add')}"><img src="__WIMG__/add.png" class="imgadd"/></a>
+    <h1 class="mui-title h1erweima">银行卡管理</h1>
+</header>
+
+<div class="dizhi-list">
+
+    <ul class="mui-table-view ul">
+        {volist name="info" id="vo" empty="暂时没有数据" }
+        <li class="mui-table-view-cell mui-collapse-content">
+            <a href="<?php echo url('index/User/bank_add',array('id'=>$vo['id']));?>" class="mui-navigate-right">
+                <p class="p">{$vo.username} <span style="float: right;margin-right:25px">卡号：{$vo.phone}</span></p>
+                <p class="p">{$vo.address}{$vo.address_info}</p>
+            </a>
+            <p class="p">
+                {if $vo.status == '0'}
+                <a onclick="set_def({$vo['id']})">设为默认</a>
+                <a onclick="set_del({$vo['id']})">删除</a>
+                {else /} <span style="color: red">当前默认</span>
+                {/if}
+
+            </p>
+        </li>
+        {/volist}
+    </ul>
+
+</div>
+{include file="Public/menu" title="$title" /}
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script>
+
+    function  set_def(id){
+        if (confirm("确定要设置吗？")) {
+            $.ajax({
+                type: "POST",
+                url: "{:url('/User/user_bank_def')}",
+                data: {id:id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.msg);  //,data.url);
+                        setTimeout(function (args) {
+                            window.location.href = "{:url('/User/user_bank')}";
+                        }, 3000);
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+
+        } else {
+            return false;
+        }
+    }
+    function  set_del(id){
+        if (confirm("确定要删除吗？")) {
+            $.ajax({
+                type: "POST",
+                url: "{:url('/User/user_bank_del')}",
+                data: {id:id},
+                dataType: "json",
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.msg);  //,data.url);
+                        setTimeout(function (args) {
+                            window.location.href = "{:url('/User/user_bank')}";
+                        }, 3000);
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+
+        } else {
+            return false;
+        }
+    }
+</script>
+</body>
+</html>

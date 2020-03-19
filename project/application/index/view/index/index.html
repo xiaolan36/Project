@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://103.200.29.54/index.html#tabbar -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>首页</title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <link href="__WCSS__/app.css" rel="stylesheet">
+    <link href="__WCSS__/indexindex.css" rel="stylesheet">
+    <link href="__WCSS__/swiper.min.css" rel="stylesheet">
+
+    <style>
+        .demopage {
+            width: 730px;
+            margin: 0 auto;
+        }
+
+        .demopage h2 {
+            font-size: 14px;
+            margin: 20px 0;
+        }
+
+        /* scrollDiv */
+        .scrollDiv {
+            margin: 0 10px;
+            height: 30px; /* 必要元素 */
+            line-height: 29px;
+            border: #FFCF78 1px solid;
+            overflow: hidden; /* 必要元素 */
+            display: flex;
+        }
+
+        .scrollDiv ul {
+            flex: 1;
+            list-style-type: none;
+        }
+
+        .scrollDiv li {
+            height: 29px;
+            padding-left: 10%;
+        }
+
+        #s2, #s3 {
+            height: 100px;
+        }
+
+        .bgcolor10 {
+            background: #8A6DE9;
+        }
+
+        .bgcolor9 {
+            background: grey;
+        }
+
+        .bgcolor8 {
+            background: darkslateblue;
+        }
+
+        .bgcolor7 {
+            background: darkgray;
+        }
+
+        .bgcolor6 {
+            background: #EC971F;
+        }
+
+        .bgcolor5 {
+            background: #007aff;
+        }
+
+        .bgcolor4 {
+            background: orange;
+        }
+
+        .bgcolor3 {
+            background: burlywood;
+        }
+
+        .bgcolor2 {
+            background: blue;
+        }
+
+        .bgcolor1 {
+            background: red;
+        }
+
+        .button {
+            line-height: 2em;
+            font-size: 0.9em;
+            width: 80%;
+            font-family: '微软雅黑';
+            border-radius: 30px;
+            border: 0px solid;
+            background: linear-gradient(45deg, BLUE, purple);
+        }
+
+        .link {
+            width: 100%;
+        }
+
+        .link ul {
+            width: 100%;
+            display: flex;
+        }
+
+        .link ul li {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .link ul li img {
+            width: 54px;
+            height: 54px;
+            margin: 0 auto;
+            padding: 0;
+        }
+    </style>
+    <script type="text/javascript">
+        //stanislav.it/how-to-prevent-ios-standalone-mode-web-apps-from-opening-links-in-safari
+        if (("standalone" in window.navigator) && window.navigator.standalone) {
+            var noddy, remotes = false;
+            document.addEventListener('click', function (event) {
+                noddy = event.target;
+                while (noddy.nodeName !== "A" && noddy.nodeName !== "HTML") {
+                    noddy = noddy.parentNode;
+                }
+                if ('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)) {
+                    event.preventDefault();
+                    document.location.href = noddy.href;
+                }
+            }, false);
+        }
+    </script>
+</head>
+<body style="background:#FFF; line-height: 1.5em;" class="mui-ios mui-ios-11 mui-ios-11-0">
+<div id="tabbar" class="mui-control-content mui-active">
+    <!-- <header class="mui-bar mui-bar-nav header">
+        <h1 class="mui-title h1">首页</h1>
+    </header> -->
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {volist name="banner" id="banner" empty="暂时没有数据" }
+            <div class="swiper-slide"><img src="__ADMINIMG__/{$banner.images}" class="img" style="height:208px"></div>
+            {/volist}
+
+        </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination"></div>
+    </div>
+    <div class="scrollDiv" id="s1" style="border-radius:5px;background:#fffef0">
+        <div style="padding: 0 10px; font-weight: bold;">会员动态</div>
+        <ul style="padding-inline-start: 0;height: 100%;font-size: 12px;">
+            {volist name="info" id="info" empty="暂时没有数据" }
+            <li><a href="#">{$info.phone} {$info.addtime}获得佣金{$info.money}</a></li>
+            {/volist}
+
+        </ul>
+    </div>
+    <div class="link">
+        <ul>
+            <li><a href="{:url('/investment/index')}"><img src="__WIMG__/licai.png" class="img"></a><span>定期理财</span>
+            </li>
+            <li><a href="{:url('/Wealth/index')}"><img src="__WIMG__/recharge.png" class="img"></a><span>充值管理</span>
+            </li>
+            <li><a href="{:url('/Wealth/withdrawal')}"><img src="__WIMG__/wallet.png" class="img"></a><span>提现管理</span>
+            </li>
+            <li><a href="{:url('/user/user_share')}"><img src="__WIMG__/share.png" class="img"></a><span>邀请好友</span>
+            </li>
+        </ul>
+        <ul>
+            <li><a href="#platform-description" id="toPlatformDescription"><img src="__WIMG__/logo.png" class="img"></a><span>平台简介</span>
+            </li>
+            <li><a href="http://m.taobao.com/"><img src="__WIMG__/taobao.png" class="img"></a><span>淘宝</span>
+            </li>
+            <li><a href="https://www.tmall.com/"><img src="__WIMG__/tmall.png" class="img"></a><span>天猫商城</span>
+            </li>
+            <li><a href="https://m.pinduoduo.com/"><img src="__WIMG__/pdd.png" class="img"></a><span>拼多多</span>
+            </li>
+        </ul>
+        <ul>
+            <li><a href="http://m.jd.com/"><img src="__WIMG__/jd.png" class="img"></a><span>京东商城</span>
+            </li>
+            <li><a href="https://m.vip.com/"><img src="__WIMG__/weipinhui.png" class="img"></a><span>唯品会</span>
+            </li>
+            <li><a href="https://m.suning.com/"><img src="__WIMG__/snyg.png" class="img"></a><span>苏宁易购</span>
+            </li>
+            <li><a href="{$config['app_link']}" target="_blank"><img src="__WIMG__/logo.png" class="img"></a><span>App下载</span>
+            </li>
+        </ul>
+    </div>
+
+    <script type="text/javascript">
+
+    </script>
+    <div id="outer">
+        <ul id="tab">
+            {volist name="tags" id="tags" empty="暂时没有数据" }
+            {if ( $tags.id == 1)}
+            <li class="current" {if $tags.tag_name == '平台简介'} id="platform-description" {/if}>{$tags.tag_name}</li>
+            {else /}
+            <li>{$tags.tag_name}</li>
+            {/if}
+            {/volist}
+        </ul>
+        <div id="content">
+
+            {foreach $arcitle as $key=>$vo }
+
+            <ul style="{if $vo.id == 70 }display: block{else /} display: none{/if}">
+                <div class="index">
+                    <div class="left">
+                        {:html_entity_decode($vo['content'], ENT_QUOTES, 'UTF-8');}
+                    </div>
+                </div>
+            </ul>
+            {/foreach}
+        </div>
+    </div>
+</div>
+{include file="Public/menu" title="$title" /}
+
+<script type="text/javascript" src="__WJS__/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__WJS__/swiper.min.js"></script>
+<script>
+
+
+    function AutoScroll(obj) {
+        $(obj).find("ul:first").animate({
+            marginTop: "-31px"
+        }, 1000, function () {
+            $(this).css({
+                marginTop: "0px"
+            }).find("li:first").appendTo(this);
+        });
+    }
+
+    $(document).ready(function () {
+        setInterval('AutoScroll("#s1")', 3000);
+    });
+    var swiper = new Swiper('.swiper-container', {
+        loop: true,
+        autoplay: 5000,
+        speed: 1000,
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+    $(function () {
+        window.onload = function () {
+            var $li = $('#tab li');
+            var $ul = $('#content ul');
+            $li.click(function () {
+                $li.removeClass();
+                var $t = $(this).index();
+                $(this).addClass('current');
+                $ul.css('display', 'none');
+                $ul.eq($t).css('display', 'block');
+            })
+
+            $("#toPlatformDescription").click(function() {
+                $("#platform-description").click();
+            });
+        }
+    });
+</script>
+</body>
+</html>

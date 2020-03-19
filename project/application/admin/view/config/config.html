@@ -1,0 +1,296 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">/</span>
+        系统管理
+        <span class="c-gray en">/</span>
+        系统设置
+    </nav>
+
+    <article class="clearfix pd-20">
+        <div class="panel">
+            <div class="panel-body">
+                <form action="" method="post" class="form form-horizontal" id="form-system-base">
+                    <div id="tab-system" class="HuiTab">
+                        <div class="tabBar cl"><span>基本设置</span><span>安全设置</span></div>
+                        <div class="tabCon">
+
+							<div class="row clearfix">
+								<label class="form-label col-xs-7 col-sm-7" style="font-size: 20px"><span class="c-red">*</span>只需填写要修改的 ：</label>
+							</div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>抢单余额比列 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="qd_cf" name="qd_cf"
+                                           placeholder="<?php if(isset($list['qd_cf']) && !empty($list['qd_cf'])) : ?>{$list['qd_cf']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>抢单最小比列 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="qd_min" name="qd_min"
+                                           placeholder="<?php if(isset($list['qd_min']) && !empty($list['qd_min'])) : ?>{$list['qd_min']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>抢单难度，数组(1-10) ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="qd_nd" name="qd_nd"
+                                           placeholder="<?php if(isset($list['qd_nd']) && !empty($list['qd_nd'])) : ?>{$list['qd_nd']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>佣金加成：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="qd_yjjc" name="qd_yjjc"
+                                           placeholder="<?php if(isset($list['qd_yjjc']) && !empty($list['qd_yjjc'])) : ?>{$list['qd_yjjc']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>抢单最低额度 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="qd_minmoney" name="qd_minmoney"
+                                           placeholder="<?php if(isset($list['qd_minmoney']) && !empty($list['qd_minmoney'])) : ?>{$list['qd_minmoney']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>最低充值额度 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="min_recharge" name="min_recharge"
+                                           placeholder="<?php if(isset($list['min_recharge']) && !empty($list['min_recharge'])) : ?>{$list['min_recharge']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>最小提现额度 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="mix_withdraw" name="	mix_withdraw"
+                                           placeholder="<?php if(isset($list['mix_withdraw']) && !empty($list['mix_withdraw'])) : ?>{$list['mix_withdraw']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>最大提现额度 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="max_withdraw" name="max_withdraw"
+                                           placeholder="<?php if(isset($list['max_withdraw']) && !empty($list['max_withdraw'])) : ?>{$list['max_withdraw']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span
+                                        class="c-red">*</span>1代佣金比例30%写0.3：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="team_oneyj" name="team_oneyj"
+                                           placeholder="<?php if(isset($list['team_oneyj']) && !empty($list['team_oneyj'])) : ?>{$list['team_oneyj']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span
+                                        class="c-red">*</span>2代佣金比例30%写0.3：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="team_twoyj" name="team_twoyj"
+                                           placeholder="<?php if(isset($list['team_twoyj']) && !empty($list['team_twoyj'])) : ?>{$list['team_twoyj']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>3代佣金比例30%写0.3 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="team_threeyj" name="team_threeyj"
+                                           placeholder="<?php if(isset($list['team_threeyj']) && !empty($list['team_threeyj'])) : ?>{$list['team_threeyj']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>抢单开始时间 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="start" name="start"
+                                           placeholder="<?php if(isset($list['start']) && !empty($list['start'])) : ?>{$list['start']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>抢单结束时间 ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="end" name="end"
+                                           placeholder="<?php if(isset($list['end']) && !empty($list['end'])) : ?>{$list['end']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span
+                                        class="c-red">*</span>100-24999：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="level1" name="level1"
+                                           placeholder="<?php if(isset($list['level1']) && !empty($list['level1'])) : ?>{$list['level1']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>25000-49999
+                                    ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="level2" name="level2"
+                                           placeholder="<?php if(isset($list['level2']) && !empty($list['level2'])) : ?>{$list['level2']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>50000-74999
+                                    ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="level3" name="level3"
+                                           placeholder="<?php if(isset($list['level3']) && !empty($list['level3'])) : ?>{$list['level3']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>75000-99999
+                                    ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="level4" name="level4"
+                                           placeholder="<?php if(isset($list['level4']) && !empty($list['level4'])) : ?>{$list['level4']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>100000以上
+                                    ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="level5" name="level5"
+                                           placeholder="<?php if(isset($list['level5']) && !empty($list['level5'])) : ?>{$list['level5']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>app下载链接
+                                    ：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="app_link" name="app_link"
+                                           placeholder="<?php if(isset($list['app_link']) && !empty($list['app_link'])) : ?>{$list['app_link']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>客服链接：</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="text" id="kefu_link" name="kefu_link"
+                                           placeholder="<?php if(isset($list['kefu_link']) && !empty($list['kefu_link'])) : ?>{$list['kefu_link']} <?php else : ?><?php endif; ?>"
+                                           class="input-text">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tabCon">
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2">密码修改</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="password" id="websiteCopyright" name="pwd"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <label class="form-label col-xs-4 col-sm-2">确认密码</label>
+                                <div class="form-controls col-xs-8 col-sm-9">
+                                    <input type="password" id="websiteCopyright" name="pwd_true"
+                                           class="input-text">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+                            <button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i
+                                    class="Hui-iconfont">&#xe632;</i> 保存
+                            </button>
+                            <button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </article>
+</div>
+</section>
+
+<!-- 公告尾部 -->
+{include file="Public/_footer"/}
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/static/business/js/main.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        $('.skin-minimal input').iCheck({
+            checkboxClass: 'icheckbox-blue',
+            radioClass: 'iradio-blue',
+            increaseArea: '20%'
+        });
+        $("#tab-system").Huitab();
+
+        $("#form-system-base").validate({
+            rules: {
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                $(form).ajaxSubmit({
+                    url: "{:url('Config/edit_config')}",
+                    type: 'post',
+                    dataType: 'json',
+                    beforeSubmit: function () {
+                    },
+                    success: function (data) {
+                        if (data.code == 200) {
+                            layer.msg(data.msg, {icon: 1, shade: 0.01, time: 2000}, function () {
+                                window.location.reload();
+                            });
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    },
+                    clearForm: false,//禁止清楚表单
+                    resetForm: false //禁止重置表单
+
+                });
+            }
+        });
+    });
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

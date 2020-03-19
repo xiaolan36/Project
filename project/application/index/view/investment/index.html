@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>定期理财</title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <script src="__WJS__/mui.min.js"></script>
+    <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+        .mui-input-group .mui-input-row {
+            height: inherit;
+        }
+    </style>
+</head>
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title h1">定期理财 <a href="{:url('/investment/investment_info')}" style="float: right">理财收益</a></h1>
+
+</header>
+<div class="mui-input-group mt60 notborder notbg yu-box">
+
+    <dl class="yu-dl" style="height: 5.06rem;">
+        <dt><h4>可存入金额（元）</h4>
+            <p>{$data['user_money_k']}</p>
+        </dt>
+        <dd><h4>账户总资产(元)</h4>
+            <p>{$data['user_money']}</p></dd>
+        <dd><h4>已存入金额(元)</h4>
+            <p>{$data['user_money_y']}</p></dd>
+
+        <dd><h4>提现未审核(元)</h4>
+            <p>{$data['tx_money']}</p></dd>
+        <dd><h4>冻结金额(元)</h4>
+            <p>{$data['dj_money']}</p></dd>
+    </dl>
+    <div class="cunru-box">
+        <div class="mui-input-row bd">
+            <label class="font-white">存入金额：</label>
+            <input type="text" id="crje" value="">
+        </div>
+        <div class="mui-input-row bd">
+            <label class="font-white">预计收益：</label>
+            <input type="text" id="yjsy" value="">
+        </div>
+
+        <div class="mui-input-row notborder" id="xzzq" style="border: none; height: unset">
+            <label class="label-up">选择周期</label>
+            <div>
+                {volist name="list" id="info" empty="暂时没有选择" }
+                <div class="mui-input-row mui-radio mui-left notborder">
+                    <label class="label-zhou">{$info.day}天
+                        <span style="float: right">日利率：{$info['rate']}%</span>
+                    </label>
+                    <input type="hidden" value="{$info.day}">
+                    <input id="rate_id" name="rate_id" type="radio" value="{$info.id}">
+                    <input type="hidden" value="{$info.rate}">
+                </div>
+                {/volist}
+
+            </div>
+        </div>
+    </div>
+    <div class="mui-button-row">
+        <button type="button" class="mui-btn mui-btn-danger button dangers" id="submit" onclick="setdraw()">提交</button>
+    </div>
+</div>
+</body>
+<script>
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript">
+    function xzzq(data, obj) {
+        $('#xzzq>button').removeClass("mui-btn-warning");
+        $('#xzzq>button').addClass("mui-btn-royal");
+        $(obj).removeClass("mui-btn-royal");
+        $(obj).addClass("mui-btn-warning");
+        $('#crzq').val(data);
+    }
+</script>
+<script type="text/javascript">
+
+    $(':radio').click(function () {
+        var num = $(this).prev().val()  //获取选中的radio的值
+        var price = $('#crje').val();
+        if (price) {
+            var rate = $(this).next().val();
+            var result = ((price * num * rate) / 100);
+            $('#yjsy').val(result.toFixed(4));
+        }
+    });
+
+    var price_s = $("#crje").val();
+
+    function setdraw() {
+
+        var price = $("#crje").val();
+        var rate_id = $('input[name="rate_id"]:checked').val();
+
+        // $("#submit").attr('disabled', true);
+        var post_url = "{:url('/investment/send_investment')}";
+        var post_data = {};
+        post_data.price = price;
+        post_data.rate_id = rate_id;
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            data: post_data,
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.msg);
+                    setTimeout(function (args) {
+                        window.location.href = "{:url('/investment/investment_info')}";
+                    }, 3000);
+                } else {
+                    layer.msg(data.msg);
+                }
+            }
+        });
+    }
+
+</script>
+</html>

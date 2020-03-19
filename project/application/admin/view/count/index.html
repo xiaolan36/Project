@@ -1,0 +1,157 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <article class="Hui-admin-content clearfix">
+        <div class="row-24 clearfix" style="margin-left: -12px; margin-right: -12px; text-align: center">
+            <div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999;text-align: center">今日新增：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-success" style="font-size: 30px;line-height: 38px;padding-bottom: 24px;">
+                            {$data['today']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999">测试</span> <span>{$data['today_test']}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999;">本月新增：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-success" style="font-size: 30px;line-height: 38px;padding-bottom: 24px;">
+                            {$data['month']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999">测试</span> <span>                            {$data['month_test']}</span></div>
+                    </div>
+                </div>
+            </div> <div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999;">上月新增：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-success" style="font-size: 30px;line-height: 38px;padding-bottom: 24px;">
+                            {$data['lastMonth']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999">测试</span> <span>{$data['lastMonth_test']}</span></div>
+                    </div>
+                </div>
+            </div> <div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999;">用户人数：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-success" style="font-size: 30px;line-height: 38px;padding-bottom: 24px;">
+                            {$data['sum_user']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999">测试</span> <span>{$data['sum_user_test']}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999;">会员人数(已充)：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-success" style="font-size: 30px;line-height: 38px;padding-bottom: 24px;">
+                            {$data['user_recharge']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999">测试</span> <span>{$data['user_recharge_test']}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-24-xs-24 col-24-sm-12 col-24-md-12 col-24-lg-12 col-24-xl-6" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999;">代理人数：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-success" style="font-size: 30px;line-height: 38px;padding-bottom: 24px;">
+                            {$data['one_user']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999">测试</span> <span>{$data['one_user_test']}</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-24-xs-24 col-24-sm-24 col-24-md-24 col-24-lg-12 col-24-xl-12" style="padding-left: 12px; padding-right: 12px; margin-bottom: 24px;">
+                <div class="panel">
+                    <div class="panel-header" style="padding:15px 24px;font-weight: 400;color:#999; text-align: center">余额总数：</div>
+                    <div class="panel-body" style="padding-bottom: 0; padding-left:24px;padding-right:24px;">
+                        <div class="c-primary" style="font-size: 30px;line-height: 38px;padding-bottom: 24px; text-align: center">
+                            {$data['sum_money']}
+                        </div>
+                        <div class="f-14" style="padding: 10px 0;border-top:solid 1px #eee"><span class="c-999"> 测试 </span> <span>{$data['sum_money_test']}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <div class="panel mt-20">
+        <div class="panel-body">
+            <div class="mt-20 clearfix">
+                <table class="table table-border table-bordered table-bg table-hover table-sort"
+                       id="data-table-list">
+                    <thead>
+                    <tr class="text-c">
+                        <th width="80">
+                            时间日期
+                        </th>
+                        <th width="80">
+                            充值总额
+                        </th>
+                        <th width="80">
+                            提现总额
+                        </th>
+                        <th width="80">
+                            存取差额
+                        </th>
+                        <th width="80">
+                            刷单商品总额
+                        </th>
+                        <th width="80">
+                            佣金总额
+                        </th>
+                        <th width="80">
+                            佣金提成总额
+                        </th>
+                        <th width="80">
+                            手工赠金总额
+                        </th>
+                        <th width="80">
+                            冻结金额总额
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="getData-list" data-currpage="1">
+                    {volist name='new_data' id='user' empey='暂时没有数据'}
+                    <tr class="text-c">
+                        <td>
+                            {$user.info}
+                        </td>
+                        <td>
+                            {$user.cz}
+                        </td>
+                        <td>
+                            {$user.tx}
+                        </td>
+                        <td>
+                            {$user.cq}
+                        </td>
+                        <td>
+                            {$user.sd}
+                        </td>
+                        <td>
+                            {$user.yj}
+                        </td>
+                        <td>
+                            {$user.yjjc}
+                        </td>
+                        <td>
+                            {$user.sg}
+                        </td>
+                        <td>
+                            {$user.dj}
+                        </td>
+                    </tr>
+                    {/volist}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<nav class="mui-bar mui-bar-tab" style="background:#fff; -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0);">
+
+    <a class="mui-tab-item " style="height: 55px;" href="{:url('/')}">
+        <span class="mui-icon">
+            <?php if($title=='主页') : ?>
+            <img style="width: 24px; height: 24px;" src="__WIMG__/shouye.png">
+
+            <?php else : ?>
+            <img style="width: 24px; height: 24px;" src="__WIMG__/shouye1.png">
+            <?php endif; ?>
+        </span>
+        <?php if($title=='主页') : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important; color:#FF8000;">首页</span>
+        <?php else : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important;">首页</span>
+        <?php endif; ?>
+    </a>
+
+    <a class="mui-tab-item" style="height: 55px;"  href="{:url('/Single/single_info')}">
+         <span class="mui-icon">
+            <?php if($title=='记录') : ?>
+             <img style="width: 24px; height: 24px;" src="__WIMG__/jilu.png">
+
+             <?php else : ?>
+             <img style="width: 24px; height: 24px;" src="__WIMG__/jilu1.png">
+             <?php endif; ?>
+        </span>
+
+        <?php if($title=='记录') : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important; color:#FF8000;">记录</span>
+        <?php else : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important;">记录</span>
+        <?php endif; ?>
+    </a>
+    <a class="mui-tab-item" style="height: 55px;"  href="{:url('/Single/index')}">
+       <span class="mui-icon">
+           <!-- <img style="width: 24px; height: 24px;" src="__WIMG__/qd.png"> -->
+           <img style="width: 44px; height: 44px; margin-left: -12px; margin-top: -5px;" src="__WIMG__/qd.png">
+        </span>
+<!-- 
+        <?php if($title=='抢单') : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important; color:#FF8000;">抢单</span>
+        <?php else : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important;">抢单</span>
+        <?php endif; ?> -->
+    </a>
+    <a class="mui-tab-item" style="height: 55px;"  href="{:url('/Single/customer')}">
+        <span class="mui-icon">
+        <?php if($title=='客服') : ?>
+            <img style="width: 24px; height: 24px;" src="__WIMG__/kefu.png">
+
+            <?php else : ?>
+            <img style="width: 24px; height: 24px;" src="__WIMG__/kefu1.png">
+            <?php endif; ?>
+
+        </span>
+        <?php if($title=='客服') : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important; color:#FF8000;">客服</span>
+        <?php else : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important;">客服</span>
+        <?php endif; ?>
+    </a>
+    <a class="mui-tab-item" style="height: 55px;"  href="{:url('/User/index')}">
+       <span class="mui-icon">
+            <?php if($title=='我的') : ?>
+           <img style="width: 24px; height: 24px;" src="__WIMG__/wode.png">
+
+           <?php else : ?>
+           <img style="width: 24px; height: 24px;" src="__WIMG__/wode1.png">
+           <?php endif; ?>
+        </span>
+        <?php if($title=='我的') : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important; color:#FF8000;">我的</span>
+
+        <?php else : ?>
+            <span class="mui-tab-label" style="height:24px;line-height: 24px !important;">我的</span>
+        <?php endif; ?>
+    </a>
+</nav>

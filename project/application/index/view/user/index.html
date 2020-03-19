@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)http://103.200.29.54/index.html#tabbar-with-contact -->
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title></title>
+
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <link href="__WCSS__/app.css" rel="stylesheet">
+    <link href="__WCSS__/userindex.css" rel="stylesheet">
+    <script type="text/javascript">
+        //stanislav.it/how-to-prevent-ios-standalone-mode-web-apps-from-opening-links-in-safari
+        if (("standalone" in window.navigator) && window.navigator.standalone) {
+            var noddy, remotes = false;
+            document.addEventListener('click', function (event) {
+                noddy = event.target;
+                while (noddy.nodeName !== "A" && noddy.nodeName !== "HTML") {
+                    noddy = noddy.parentNode;
+                }
+                if ('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)) {
+                    event.preventDefault();
+                    document.location.href = noddy.href;
+                }
+            }, false);
+        }
+    </script>
+    <style>.my {
+    background: #FFF;
+    color: #000;
+     height: 280px;
+    width: 90%;
+    margin-top: 20px;
+    left: 5%;
+    border-radius: 10px;
+}</style>
+</head>
+
+<body style="background:#f2f2f2;" class="mui-ios mui-ios-11 mui-ios-11-0">
+
+    <!--我的-->
+    <div id="tabbar-with-contact" class="mui-control-content mui-active"
+        style="overflow: scroll;padding-bottom: 100px;">
+        <!-- <header class="mui-bar mui-bar-nav header">
+        <h1 class="mui-title h1">我的</h1>
+        <a href="{:url('/User/user_set')}" style="    float: right;margin-top: 9px;margin-right: 10%;">
+            <img src="__WIMG__/shezhi.png" class="imglist">
+        </a>
+    </header> -->
+        <div class="mui-card-content my">
+            <a href="{:url('/User/user_set')}"
+                style="position:relative; top: 9px; right: 9px; left: calc(100% - 40px);">
+                <img src="__WIMG__/shezhi.png" class="imglist">
+            </a>
+            <img src="__WIMG__/logo.png" class="myimg">
+            <div>
+                <p style="text-align: center">姓名:{$user.nick}</p>
+            </div>
+            <div>
+                <p style="text-align: center">邀请码:{$user.user_code}</p>
+            </div>
+            <div style="width:100%;overflow:hidden">
+                <div style="width:50%;float:left;text-align:center">
+                    <div style="padding-top:5%;padding-bottom:10%">
+                        <p style="width:100%;color:red;">{:number_format($user.my_money,2)}</p>
+                        <p style="width:100%;color:#202020;">余额</p>
+                        <p style="width:100%;color:#476df6;">
+                            <button type="button" class="qdbut" style="font-size: 14px;" onclick="start_qd();">
+                                &nbsp;&nbsp;充&nbsp;值<img src="__WIMG__/my/cz.png" class="buttonimg">
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <div style="width:50%;float:right;text-align:center">
+                    <div style="padding-top:5%;padding-bottom:10%">
+                        <p style="width:100%;color:red;">{:number_format($user.profit_money,2)}</p>
+                        <p style="width:100%;color:#202020;">佣金</p>
+                        <p style="width:100%;color:#476df6;">
+                            <button type="button" class="qdbut"  style="font-size: 14px;" onclick="start_tx();">
+                                &nbsp;&nbsp;提&nbsp;现<img src="__WIMG__/my/tx.png" class="buttonimg">
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="mui-table-view ullist">
+            <li class="mui-table-view-cell mui-collapse-content">
+                <img src="__WIMG__/dingqi.png" class="imglist">
+                <a href="{:url('/investment/index')}" class="mui-navigate-right"
+                    style=" margin-left: 10%;font-size: 0.9em; bottom: 4px; ">
+                    定期理财
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-collapse-content">
+                <img src="__WIMG__/my/zijin.png" class="imglist">
+                <a href="{:url('/user/user_money_info')}" class="mui-navigate-right"
+                    style=" margin-left: 10%;font-size: 0.9em; bottom: 4px; ">
+                    资金明细
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-collapse-content">
+                <img src="__WIMG__/my/zhishu.png" class="imglist">
+                <a href="{:url('/user/user_team')}" class="mui-navigate-right"
+                    style=" margin-left: 10%; font-size: 0.9em;bottom: 4px; ">
+                    直属下线
+                </a>
+            </li>
+        </ul>
+
+        <ul class="mui-table-view ullist">
+            <li class="mui-table-view-cell mui-collapse-content">
+                <img src="__WIMG__/my/dizhi.png" class="imglist">
+                <a href="{:url('/User/user_address')}" class="mui-navigate-right"
+                    style=" margin-left: 10%;font-size: 0.9em; bottom: 4px; ">
+                    地址管理
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-collapse-content">
+                <img src="__WIMG__/my/jilu.png" class="imglist">
+                <a href="{:url('/single/single_info')}" class="mui-navigate-right"
+                    style=" margin-left: 10%;font-size: 0.9em; bottom: 4px; ">
+                    记录
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-collapse-content">
+                <img src="__WIMG__/my/fenxiang.png" class="imglist">
+                <a href="{:url('/user/user_share')}" class="mui-navigate-right"
+                    style=" margin-left: 10%; font-size: 0.9em;bottom: 4px; ">
+                    我要分享
+                </a>
+            </li>
+        </ul>
+        <div> <button type="button" class="endbutton" style="margin-top:15px; font-size: 14px !important;" onclick="loginout()">退出登录</button></div>
+    </div>
+
+    {include file="Public/menu" title="$title" /}
+</body>
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript">
+    function loginout() {
+        window.location.href = "{:url('/User/loginout')}";
+    }
+
+    function start_qd() {
+        window.location.href = "{:url('/Wealth/index')}";
+    }
+    function start_tx() {
+        window.location.href = "{:url('/Wealth/withdrawal')}";
+    }
+</script>
+
+</html>

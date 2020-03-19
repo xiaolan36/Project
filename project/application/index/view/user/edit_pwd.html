@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title></title>
+
+	<link href="__WCSS__/mui.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vant@1.6/lib/index.css">
+	<link href="__WCSS__/mystyle.css" rel="stylesheet">
+	<style>
+		#count {
+			position: absolute;
+			padding: 0;
+			right: 0;
+			top: 50%;
+			width: 1.72rem;
+			height: .64rem;
+			line-height: .64rem;
+			font-size: .26rem;
+			color: #fff;
+			text-align: center;
+			border-radius: 10em;
+			background: linear-gradient(90deg,rgba(255,145,59,1) 0%,rgba(255,85,54,1) 100%);
+			margin: 0;
+			margin-top: -0.34rem;
+		}
+		body {
+			background: #EFEFEF !important;
+		}
+		.mui-input-group:before {
+			background-color: transparent;
+		}
+	</style>
+	<script>
+		(function (doc, win) {
+			var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function () {
+						var clientWidth = docEl.clientWidth;
+						if (!clientWidth) return;
+						if (clientWidth >= 750) {
+							docEl.style.fontSize = '100px';
+						} else {
+							docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+						}
+					};
+			recalc();
+			if (!doc.addEventListener) return;
+			win.addEventListener(resizeEvt, recalc, false);
+			doc.addEventListener('DOMContentLoaded', recalc, false);
+		})(document, window);
+	</script>
+
+</head>
+<body style="background: #000;">
+<header class="mui-bar mui-bar-nav header">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+	<h1 class="mui-title h1">修改密码</h1>
+</header>
+<form class="mui-input-group form group-list mt60"  name="AddUser" action="{:url('/User/edit_pwd')}">
+
+	<div class="groupbox">
+		<div class="mui-input-row formdiv">
+			<span>手机号</span>
+			<input type="number" class="forminput" value="{$phone}" readonly="readonly" name="moblie" id="mobile" placeholder="请输入手机号">
+		</div>
+		<!-- <div class="mui-input-row formdiv">
+            <img src="../Public/home/wap/images/yanzheng.png" class="formimg"/>
+            <input type="number" class="forminput" placeholder="请输入验证码">
+            <button type="input" class="mui-btn mui-btn-danger button" >| 获取验证码</button>
+
+        </div> -->
+
+		<div class="mui-input-row formdiv">
+			<label class="mui-navigate-right" href="#">修改类型</label>
+			<select class="mui-h5" name="type">
+				<option value="login">登录密码</option>
+				<option value="withdrawal">提现密码</option>
+			</select>
+		</div>
+
+		<div class="mui-input-row formdiv">
+			<span>密码</span>
+			<input type="password" class="forminput" name="password" id="password" placeholder="请输入密码">
+		</div>
+		<div class="mui-input-row formdiv">
+			<span>确认密码</span>
+			<input type="password" class="forminput"  name="c_password" id="c_password" placeholder="请确认密码">
+		</div>
+		<div class="mui-input-row formdiv">
+			<span>验证码</span>
+			<input type="number" id="code" name="code" id="code" placeholder="请输入验证码">
+			<input type="text" value="获取验证码" class="mui-btn mui-btn-danger huoqu" id="count" onclick="send()"
+				   readonly="readonly" />
+		</div>
+	</div>
+
+	<div class="mui-button-row">
+		<button type="button" class="mui-btn mui-btn-danger dangers" id="submit"  onclick="setps()" >修改</button>
+	</div>
+
+
+
+</form>
+
+</body>
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js" ></script>
+<script type="text/javascript" src="__COM__/layer/layer.js" ></script>
+<script type="text/javascript">
+	function send() {
+		var mobile = $("#mobile").val();
+
+		if (mobile == '' || mobile == null) {
+			layer.msg('请输入手机号码');
+			return false;
+		}
+		//发送验证码
+		$.post(
+
+				'{:url("Login/send_sms")}',
+
+				{ mobile: mobile, type: "backpwd" },
+
+				function (data, state) {
+					//alert(data.status);
+					if (state != "success") {
+						layer.msg("网络请求失败,请重试!");
+						//return false;
+					} else if (data.status == 1) {
+						//	layer.msg("短信验证码发送成功！");
+						var index = 60;
+						var stime = setInterval(function () {
+							if (index > 0) {
+								$("#count").val(index + 's');
+								$("#count").attr("disabled", true);
+								index--;
+							} else if (index == 0) {
+								$("#count").val("重新获取");
+								//$("#count").className = "mui-btn mui-btn-warning mui-btn-outlined ckbtn";
+								$("#count").removeAttr("disabled");
+								//$('#perpho').removeAttr("disabled");
+								clearInterval(stime);
+							}
+						}, 1000);
+
+					} else {
+						layer.msg(data.msg);
+						//return false;
+					}
+				}
+		);
+
+	}
+	function setps(){
+		var thisform=document.forms['AddUser'];
+		var   moblie=$("#mobile").val();
+		var   password=$("#password").val();
+		var   c_password=$("#c_password").val();
+		var   code=$("#code").val();
+
+		if(password=='' || password==null){
+			layer.msg('请输入密码');
+			return false;
+		}
+		if(c_password=='' || c_password==null){
+			layer.msg('请再次输入密码');
+			return false;
+		}
+		if(password != c_password){
+			layer.msg('两次密码不一致');
+			return false;
+		}
+		if(code ==''){
+			layer.msg('请输入验证码');
+			return false;
+		}
+
+		var post_url = $("form[name='AddUser']").attr('action');
+		var post_data= $("form[name='AddUser']").serialize();
+		// $("#submit").attr('disabled',true)
+		$.ajax({
+			type: "POST",
+			url: post_url,
+			data:post_data,
+			dataType: "json",
+			success: function(data){
+				if(data.status==1){
+					layer.msg(data.msg);  //,data.url);
+					setTimeout(function (args) {
+						window.location.href = "{:url('/User/edit_pwd')}";
+					}, 3000);
+				}else if(data.status==2){
+					layer.msg('修改成功,请重新登录');  //,data.url);
+					setTimeout(function (args) {
+						window.location.href = "{:url('Login/login')}";
+					}, 3000);
+				}
+				else{
+					layer.msg(data.msg);
+				}
+			}
+		});
+	}
+
+</script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet"/>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    <h1 class="mui-title h1">理财记录</h1>
+
+</header>
+<ul class="shengxi-list mt60">
+    {volist name="list" id="vo" empty="暂时没有数据" }
+    <li style="margin-top: 10px">
+
+        <p><span>
+                        存入金额
+                    </span>
+            <em>
+                ￥{$vo.num}
+            </em></p>
+        <p><span>
+                        日利率(预期)
+                    </span>
+            <em>{$vo.rate}%</em></p>
+        <p><span>
+                        到期收益
+                    </span>
+            <em>￥{$vo[ 'num' ] * $vo[ 'rate' ] / 100 * $vo[ 'days' ]}</em></p>
+        <p><span>存入时间</span>
+            <em>{$vo.addtime|date="m-d H:i"}</em></p>
+        <p><span>到期时间</span>
+            <em>{$vo.endtime|date="m-d H:i"}</em></p>
+        <?php if(( $vo['status'] == 1) && ($vo['times'] == 1)): ?> <p><span style="margin: auto;"
+                                                                            onclick="investment({$vo['id']})">可领取</span>
+    </p>
+        <?php elseif(( $vo['status'] == 1) && ($vo['times'] == 2)): ?><p><span style="margin: auto;">不可领取</span></p>
+        <?php else: ?> <p><span style="margin: auto;">已领取</span></p>
+        <?php endif; ?>
+
+    </li>
+    {/volist}
+
+</ul>
+
+</body>
+
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript">
+    $("#goyesx").click(function () {
+        window.location.href = "{:url('Common/yesx')}"
+    });
+
+    function investment(id) {
+        $.post("{:url('/investment/investment_get')}",
+            {'id': id},
+            function (data) {
+            var data=JSON.parse(data);
+                if (data.status == 1) {
+                    layer.msg(data.msg);
+                    setTimeout(function (args) {
+                        window.location.href = "{:url('/investment/investment_info')}";
+                    }, 3000);
+                } else {
+                    layer.msg(data.message);
+                }
+            }
+        );
+    }
+</script>
+
+</html>

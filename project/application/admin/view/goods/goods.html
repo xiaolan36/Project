@@ -1,0 +1,308 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        抢单管理
+        <span class="c-gray en">
+            /
+        </span>
+        商品管理
+    </nav>
+    <article class="Hui-admin-content clearfix">
+        <form action="{:url('Goods/goods')}" method="get">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row clearfix">
+                        <div class="col-xs-12 col-sm-3 col-md-4">
+                            <div class="row clearfix mb-10">
+                                <span class="col-xs-4 form-item-label">
+                                    状态：
+                                </span>
+                                <span class="col-xs-8 form-item-control">
+                                    <span class="select-box">
+                                        <select class="select" id="statusifyID" name="statusifyID">
+                                            <option value="0">
+                                                全部状态
+                                            </option>
+                                            <option value="1">未匹配
+                                            <option value="2">已匹配
+                                        </select>
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="row clearfix">
+                                <span class="col-xs-4 form-item-control">
+                                    <button class="btn btn-success radius" id="search-submit" name="" type="submit">
+                                        <i class="Hui-iconfont">
+                                            
+                                        </i>
+                                        搜索
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="panel" style="margin-top: 10px">
+            <div class="clearfix">
+                <span class="f-l">
+                    <a class="btn btn-primary radius" href="javascript:;" onclick="article_add()">
+                        <i class="Hui-iconfont">
+                            
+                        </i>
+                        添加
+                    </a>
+                </span>
+            </div>
+        </div>
+
+        <div class="panel mt-20">
+
+            <div class="panel-body">
+
+                <div class="mt-20 clearfix">
+                    <table class="table table-border table-bordered table-bg table-hover table-sort"
+                           id="data-table-list">
+                        <thead>
+                        <tr class="text-c">
+                            <th width="80">
+                                ID
+                            </th>
+                            <th width="80">
+                                订单号
+                            </th>
+                            <th width="80">
+                                金额
+                            </th>
+                            <th width="150">
+                                商品名称
+                            </th>
+                            <th width="80">
+                                商家
+                            </th>
+                            <th width="80">
+                                匹配用户
+                            </th>
+                            <th width="80">
+                                用户余额
+                            </th>
+                            <th width="80">
+                                匹配时间
+                            </th>
+                            <th width="80">
+                                状态
+                            </th>
+                            <th width="100">
+                                操作
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="getData-list" data-currpage="1">
+                        {volist name='list' id='article'}
+                        <tr class="text-c">
+                            <td>
+                                {$article.id}
+                            </td>
+                            <td>
+                                {$article.ordernum}
+
+                            </td>
+                            <td>
+                                {$article.price}
+                            </td>
+                            <td>
+                                {$article.name}
+                            </td>
+                            <td>
+                                {$article.shop}
+                            </td>
+                            <td>
+                                {$article.uname}
+                            </td>
+                            <td>
+                                {$article.umoney}
+                            </td>
+                            <td>
+                                {$article.pipeitime}
+                            </td>
+                            <td class="td-status">
+                                {eq name="$article.status" value="1"}
+                                <span class="label label-radius radius">
+                                        未匹配
+                                    </span>
+                                {else/}
+                                <span class="label label-success radius">
+                                        已匹配
+                                    </span>
+                                {/eq}
+                            </td>
+                            <td class="f-14 td-manage">
+
+                                <a class="ml-5" href="javascript:;" onclick="article_edit({$article.id})"
+                                   style="text-decoration:none" title="编辑">
+                                    <i class="Hui-iconfont">
+                                        
+                                    </i>
+                                </a>
+                                <a class="ml-5" href="javascript:;" onclick='article_del("{$article.id}")'
+                                   style="text-decoration:none" title="删除">
+                                    <i class="Hui-iconfont">
+                                        
+                                    </i>
+                                </a>
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-c" id="laypage">
+                    {$page|raw}
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+
+<!--请在下方写此页面业务s相关的脚本-->
+<script src="__ADMINPUBLIC__/lib/datatables/1.10.15/jquery.dataTables.min.js" type="text/javascript">
+</script>
+<script src="__ADMINPUBLIC__/lib/laypage/1.2/laypage.js" type="text/javascript">
+</script>
+<script src="__ADMINPUBLIC__/static/business/js/main.js" type="text/javascript">
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+<script type="text/javascript">
+
+    function getRequest() {
+        var url = window.location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                //就是这句的问题
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                //之前用了unescape()
+                //才会出现乱码
+            }
+        }
+        return theRequest;
+    }
+
+    // 获取URL参数，初始化条件
+    function getUrlParameter() {
+        // parseQueryString() 方法 在main.js中 提取URL参数为对象
+        var urlObj = getRequest();
+        $("#search-datetime-start").val(urlObj.start);
+        $("#search-datetime-end").val(urlObj.end);
+        $("#search-input").val(urlObj.searchInput);
+    }
+
+    function article_edit(id) {
+        var index = layer.open({
+            type: 2,
+            title: '修改轮播图',
+            fixed: false, //不固定
+            maxmin: true,
+            shade: 0.4,
+            area: ["80%", "90%"],
+            content: "{:url('Goods/edit_goods')}?ids=" + id,
+        });
+    }
+
+    function article_add() {
+        var index = layer.open({
+            type: 2,
+            title: '修改文章',
+            fixed: false, //不固定
+            maxmin: true,
+            shade: 0.4,
+            area: ["80%", "90%"],
+            content: "{:url('Goods/add_goods')}",
+        });
+        // layer.full(index);
+    }
+
+    /*资讯-删除*/
+    function article_del(id) {
+        layer.confirm('确认要删除吗？' + id, function (index) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('Goods/goods_del')}",
+                dataType: 'json',
+                data: {id: id},
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon: 1, shade: 0.01, time: 1000}, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg(data.msg, {icon: 2, time: 1000});
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
+
+    /*资讯-状态修改*/
+    function article_stop(id, status) {
+
+        var msg = '';
+        if (status == 1) {
+            msg = '确定下架吗'
+        } else {
+            msg = '确定发布吗'
+        }
+
+        layer.confirm(msg, function (index) {
+            $.ajax({
+                type: 'POST',
+                url: "{:url('Goods/banner_status')}",
+                dataType: 'json',
+                data: {id: id, status: status},
+                success: function (data) {
+                    if (data.code == 200) {
+                        layer.msg(data.msg, {icon: 1, shade: 0.01, time: 1000}, function () {
+                            window.location.reload();
+                        });
+
+                    } else {
+                        layer.msg(data.msg, {icon: 2, time: 1000});
+                    }
+
+                },
+                error: function (data) {
+                    console.log(data.msg);
+                },
+            });
+        });
+    }
+
+    $(function () {
+
+        runDatetimePicker(); // 实例化日期控件
+        getUrlParameter(); // 获取URL参数，初始化条件
+
+        // runGetDataList(); // 页面载入，自执行加载数据...
+        // 点击搜索执行...
+        $("#search-submit").on("click", function () {
+            // runGetDataList();
+        });
+
+    });
+</script>

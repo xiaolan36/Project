@@ -1,0 +1,194 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        产品管理
+        <span class="c-gray en">
+            /
+        </span>
+        栏目管理
+    </nav>
+    <article class="Hui-admin-content clearfix">
+        <div class="panel" style="margin-top: 10px">
+            <div class="clearfix">
+                <span class="f-l">
+                    <a class="btn btn-primary radius" href="javascript:;" onclick="article_add()">
+                        <i class="Hui-iconfont">
+                            
+                        </i>
+                        添加
+                    </a>
+                </span>
+            </div>
+        </div>
+        <div class="panel mt-20">
+            <div class="panel-body">
+                <div class="mt-20 clearfix">
+                    <table class="table table-border table-bordered table-bg table-hover table-sort" id="data-table-list">
+                        <thead>
+                            <tr class="text-c">
+                                <th width="80">
+                                    ID
+                                </th>
+                                <th width="80">
+                                    栏目名称
+                                </th>
+                                <th width="80">
+                                    级别
+                                </th>
+                                <th width="80">
+                                    所属上级
+                                </th>
+                                <th width="100">
+                                    操作
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="getData-list" data-currpage="1">
+                            {volist name='list' id='article'}
+                            <tr class="text-c">
+                                <td>
+                                    {$article.id}
+                                </td>
+                                <td>
+                                    {$article.tag_name}
+                                </td>
+                                <td class="td-status">
+                                    {eq name="$article.e_id" value="0"}
+                                    <span class="label label-success radius">
+                                        顶级栏目
+                                    </span>
+                                    {else/}
+                                    <span class="label label-radius radius">
+                                        一级栏目
+                                    </span>
+                                    {/eq}
+                                </td>
+                                <td>
+                                    {eq name="$article.e_id" value="0"}
+                                    <span class="label label-radius radius">
+                                        无
+                                    </span>
+                                    {else/}
+                                    <span class="label label-success radius">
+                                        {volist name='list' id='data'}
+                                                {if condition="($data.id == $article.e_id) "} 
+                                                    {$data.tag_name}
+                                                    {else /} 
+                                                {/if}
+                                            {/volist}
+                                    </span>
+                                    {/eq}
+                                </td>
+                                <td class="f-14 td-manage">
+                                    {if condition="($data.e_id == 0) "}
+
+                                    {else /}
+                                    <a class="ml-5" href="javascript:;" onclick='article_del("{$article.id}","{$article.tag_name}")' style="text-decoration:none" title="删除">
+                                        <i class="Hui-iconfont">
+                                            
+                                        </i>
+                                    </a>
+                                    {/if}
+
+                                    <a class="ml-5" href="javascript:;" onclick="article_edit({$article.id})" style="text-decoration:none" title="编辑">
+                                        <i class="Hui-iconfont">
+                                            
+                                        </i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {/volist}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-c" id="laypage">
+                    {$list->render()}
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+<!-- 公告尾部 -->
+{include file="Public/_footer"/}
+<!--请在下方写此页面业务相关的脚本-->
+<script src="__ADMINPUBLIC__/lib/datatables/1.10.15/jquery.dataTables.min.js" type="text/javascript">
+</script>
+<script src="__ADMINPUBLIC__/lib/laypage/1.2/laypage.js" type="text/javascript">
+</script>
+<script src="__ADMINPUBLIC__/static/business/js/main.js" type="text/javascript">
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    //打开添加咨询
+
+
+
+        /*资讯-删除*/
+        function article_del(id,name){
+            console.log(id,name)
+            layer.confirm('确认要删除吗？'+name,function(index){
+                $.ajax({
+                    type: 'POST',
+                    url: "{:url('Column/Column_del')}",
+                    dataType: 'json',
+                    data:{id:id},
+                    success: function(data){
+                        if (data.code==200) {
+                            layer.msg(data.msg, {icon: 1,shade: 0.01,time:1000},function(){
+                              window.location.reload();
+                            }); 
+                        }else{
+                            layer.msg(data.msg,{icon:2,time:1000});
+                        }
+                        
+                    },
+                    error:function(data) {
+                        console.log(data.msg);
+                    },
+                });
+            });
+        }
+
+        function article_edit(id){
+            var index = layer.open({
+                type: 2,
+                title: '修改栏目',
+                fixed: false, //不固定
+                maxmin: true,
+                shade:0.4,
+                area:["80%","90%"],
+                content: "{:url('Column/Column_edit')}?ids="+id,
+            });
+        }
+
+        function article_add(){
+            var index = layer.open({
+                type: 2,
+                title: '添加栏目',
+                fixed: false, //不固定
+                maxmin: true,
+                shade:0.4,
+                area:["80%","90%"],
+                content: "{:url('Column/column_add')}",
+            });
+        }
+
+
+
+        $(function(){
+
+            runDatetimePicker(); // 实例化日期控件
+            // runGetDataList(); // 页面载入，自执行加载数据...
+            // 点击搜索执行...
+            $("#search-submit").on("click",function(){
+                // runGetDataList();
+            });
+
+
+        });
+</script>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>提交订单</title>
+	<link href="__WCSS__/mui.min.css" rel="stylesheet">
+	<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+	<script type="text/javascript" src="__COM__/js/index.js" ></script>
+	<style>
+		.body{
+			line-height: px;
+		}
+		.mui-table-view-cell:after{
+			left: 0px;
+			background-color:#292828;
+		}
+		.mui-table-view:before{
+			background-color:#292828;
+		}
+		.mui-table-view:after{
+			background-color:#292828;
+		}
+		.mui-input-group:before{
+			height:0px
+		}
+		.mui-input-group:after{
+			height: 0px;
+		}
+		.header{
+			background:#1f253d;
+			top:0;
+			box-shadow:0 0px 0px #ccc;
+			-webkit-box-shadow:0 0px 0px #ccc;
+		}
+		.h1{
+			font-family:'微软雅黑';
+			color: #fff;
+		}
+		.div{
+			background:#1f253d;
+			height:160px;
+			width:175px;
+			top:80px;
+			margin:auto;
+			left:0px;
+			right:0px;
+			border-radius:10px;
+			box-shadow:2px 0px 20px 0px #007AFF;
+		}
+		.img{
+			width:120px;
+			margin-left:26px;
+			margin-top:20px;
+		}
+		.ul{
+            margin-top: 14%;
+            background: #1f243e;
+		}
+		.li{
+			margin-left:10%;
+			font-family:'微软雅黑';
+			color:aquamarine;
+		}
+		.p{
+			margin-left:10%;
+			font-family:'微软雅黑';
+			color:#fff;
+		}
+      	.pipei {
+          line-height: 2em;
+          margin-top: 30px;
+          font-size: 0.9em;
+          width: 90%;
+          font-family: '微软雅黑';
+          border-radius: 30px;
+          border: 0px solid;
+          background: linear-gradient(45deg,BLUE,purple);
+      }  
+      img {
+        border: 0;
+        width: 33%;
+      }
+	</style>
+</head>
+<body style="background:#f2f2f2;">
+	<header class="mui-bar mui-bar-nav header">
+			
+			<h1 class="mui-title h1">确认订单</h1>
+	</header>
+		<ul class="mui-table-view ul">
+			<li class="mui-table-view-cell mui-collapse-content">
+             
+				<a href="/User/erweima" class="mui-navigate-right">
+					<p class="p">收货人：<?=$address[0]['name']?> <span style="float: right;margin-right:25px">电话：<?=$address[0]['tel']?></span></p>
+                  	<p > <img src="/Public/home/wap/images/dingwei2.jpg" style="width:20px;height:20px"></p>
+					<p class="p">收货地址：<?=$address[0]['city'].$address[0]['address']?></p>
+                  	<input type="hidden" id="address_id" value="<?=$address[0]['id']?>">
+				</a>
+			</li>
+		</ul>
+  
+  		<ul class="mui-table-view" style="margin-top: 3%;background: #1f243e; ">
+			<li class="mui-table-view-cell mui-collapse-content">                   
+					<p style="font-family:'微软雅黑';color:#fff;font-weight:bold">订单号：{$olist.ordernum}</p>
+                  	<div style="margin-top: 10%;"><?=html_entity_decode($order['url'])?></div>
+                    <div style="font-size: 14px;float: right;margin-right: 9%; width: 55%;color: #fff;margin-top: -23%;">{$order.name}...</div>
+                    <div style="font-size: 14px;float: right;margin-right:-40%; width: 57%;color: #4795f9;margin-top: -37%;">￥{$order.price}</div>
+                    <div style="font-size: 14px;float: right;margin-right:7%; color: #999;width: 57%;margin-top: -7%;">{$order.shop}</div>  
+                    <div style="font-size: 14px;float: right;margin-right:-51%; color: #999;width: 57%;margin-top: -15%;">x 1</div> 
+             		<input type="hidden" id="order_id" value="{$olist.id}">              
+			</li>
+		</ul>
+  
+  		<ul class="mui-table-view" style="margin-top: 3%;background: #1f243e; ">
+			<li class="mui-table-view-cell mui-collapse-content">
+              <div style="float:right;">
+              <p style="font-size:16px;color: #fff;">您可用余额为：<span style="color: #4795f9;">{$ulist.money}</span></p>
+              <p style="padding-top:20%"> 订单总额：<span style="color: #4795f9;">￥{$olist.price}</span></p>
+              <p style="margin-right:0px"> 佣金：<span style="color: #4795f9;">￥<?php echo $olist['price']*$olist['yjjc'] ;?></span></p>
+			  <p style=""> 预计返还：<span style="color:red;font-size:18px;">￥<?php echo $olist['price']*(1+$olist['yjjc']) ;?></span></p>
+              </div>
+			</li>
+		</ul>
+  
+  		<div class="mui-button-row">
+			<button type="button" class="mui-btn mui-btn-danger pipei" id="pipeinnow" onclick="tijiao()">提交订单</button>
+		</div>
+</body>
+<script> 
+  function tijiao() {
+		var id = $("#order_id").val();
+		var address  = $("#address_id").val();
+    	if(address=='' || address==null){
+            layer.msg('收货信息不能为空!');
+            return false;
+        }
+		$.ajax({
+			url:'/Index/tijiao',
+			type:'post',
+			data:{'id':id,'address':address},
+			datatype:'json',
+			success:function (mes) {
+				if(mes.status == 1){
+					
+                  	layer.alert('确定支付', function(index){
+                      window.location.href = "/Index/qdgame";
+                    });
+                  	
+				}else if(mes.status == 2){
+					layer.msg("该订单已被冻结，请解冻后再次提交");  //,data.url);
+					setTimeout(function (args) {
+						window.location.href = "{:U('Index/shoudan')}";
+					}, 3000);
+				}else if(mes.status == 3){
+					layer.msg("该订单已提交，请勿重新提交");  //,data.url);
+					setTimeout(function (args) {
+						window.location.href = "{:U('Index/qdgame')}";
+					}, 3000);
+				}else{
+					msg_alert(mes.message);
+				}
+			}
+		})
+	}
+</script>
+</html>

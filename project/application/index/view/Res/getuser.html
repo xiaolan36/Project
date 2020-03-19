@@ -1,0 +1,59 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<body>
+<table width="1550" border="1" id="table">
+    <a href="/res/add"> 添加</a>
+    <tr>
+        <td aligh="left">用户id</th>
+        <td aligh="right">上级ID</th>
+        <td aligh="right">上上级ID</th>
+        <td aligh="right">上上上级ID</th>
+        <td aligh="right">用户账号</th>
+        <!--<td aligh="right">用户密码</th>-->
+        <td aligh="right">用户手机号</th>
+        <!--<td aligh="right">邀请码</th>-->
+        <td aligh="right">用户名称</th>
+        <td aligh="right">用户余额</th>
+        <!--<td aligh="right">用户锁定1 不锁 0拉黑 -1 删除</th>-->
+        <!--<td aligh="right">是否激活 1-已激活 0-未激活</th>-->
+        <td aligh="right">微信账号</th>
+        <td aligh="right">支付宝</th>
+        <td aligh="right">真实姓名</th>
+        <td aligh="right">电子邮件</th>
+        <td aligh="right">QQ</th>
+        <td aligh="right">身份证号码</th>
+        <td aligh="right">直推人数</th>
+        <td aligh="right">总收益</th>
+    </tr>
+    <foreach name="data" item="value">
+
+    <tr>
+        <td aligh="left">{$value['userid']}</th>
+        <td aligh="right">{$value['pid']}</th>
+        <td aligh="right">{$value['gid']}</th>
+        <td aligh="right">{$value['ggid']}</th>
+        <td aligh="right">{$value['account']}</th>
+        <!--<td aligh="right">{$value['login_pwd']}</th>-->
+        <td aligh="right">{$value['mobile']}</th>
+        <!--<td aligh="right">{$value['u_yqm']}</th>-->
+        <td aligh="right">{$value['username']}</th>
+        <td aligh="right">{$value['money']}</th>
+        <!--<td aligh="right">{$value['status']}</th>-->
+        <!--<td aligh="right">{$value['activate']}</th>-->
+        <td aligh="right">{$value['wx_no']}</th>
+        <td aligh="right">{$value['alipay']}</th>
+        <td aligh="right">{$value['truename']}</th>
+        <td aligh="right">{$value['email']}</th>
+        <td aligh="right">{$value['userqq']}</th>
+        <td aligh="right">{$value['usercard']}</th>
+        <td aligh="right">{$value['u_ztnum']}</th>
+        <td aligh="right">{$value['zsy']}</th>
+        <td>
+            <!--<a href=""> 编辑</a>-->
+            <a href="http://scbscb.net/res/del?id={$value['userid']}"> 删除</a>
+        </td>
+    </tr>
+    </foreach>
+</table>
+</body>
+</html>

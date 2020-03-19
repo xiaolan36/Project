@@ -1,0 +1,209 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        报表管理
+        <span class="c-gray en">
+            /
+        </span>
+        统计报表
+    </nav>
+    <article class="Hui-admin-content clearfix">
+        <form action="{:url('Count/count_sum')}" method="get">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row clearfix">
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <div class="row clearfix mb-10">
+                                <span class="col-xs-4 form-item-label">
+                                    开始日期：
+                                </span>
+                                <span class="col-xs-8 form-item-control">
+                                    <input class="input-text datetimepicker-input" id="search-datetime-start"
+                                           name="start" type="text">
+                                    </input>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <div class="row clearfix mb-10">
+                                <span class="col-xs-4 form-item-label">
+                                    结束日期：
+                                </span>
+                                <span class="col-xs-8 form-item-control">
+                                    <input class="input-text datetimepicker-input" id="search-datetime-end" name="end"
+                                           type="text">
+                                    </input>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="row clearfix">
+                                <span class="col-xs-4 form-item-control">
+                                    <button class="btn btn-success radius" id="search-submit" name="" type="submit">
+                                        <i class="Hui-iconfont">
+                                            
+                                        </i>
+                                        搜索
+                                    </button>
+                                </span>
+                                <span class="col-xs-4 form-item-control">
+                                    <button class="btn btn-primary  radius"  name="excel" type="submit">
+                                        <i class="Hui-iconfont">
+                                            
+                                        </i>
+                                        导出excel
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="panel mt-20">
+            <div class="panel-body">
+                <div class="mt-20 clearfix">
+                    <table class="table table-border table-bordered table-bg table-hover table-sort"
+                           id="data-table-list">
+                        <thead>
+                        <tr class="text-c">
+                            <th width="80">
+                                时间日期
+                            </th>
+                            <th width="80">
+                                充值总额
+                            </th>
+                            <th width="80">
+                                提现总额
+                            </th>
+                            <th width="80">
+                                充值人数
+                            </th>
+                            <th width="80">
+                                提现人数
+                            </th>
+                            <th width="80">
+                                首充人数
+                            </th>
+                            <th width="80">
+                                在线人数
+                            </th>
+                            <th width="80">
+                                存取差额
+                            </th>
+                            <th width="80">
+                                刷单商品总额
+                            </th>
+                            <th width="80">
+                                佣金总额
+                            </th>
+                            <th width="80">
+                                佣金提成总额
+                            </th>
+                            <th width="80">
+                                手工赠金
+                            </th>
+                            <th width="80">
+                                手工扣金
+                            </th>
+                            <th width="80">
+                                未结算金额
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="getData-list" data-currpage="1">
+                        {volist name='data' id='user' empey='暂时没有数据'}
+                        <tr class="text-c">
+                            <td>
+                                {$user.time}
+                            </td>
+                            <td>
+                                {$user.cz}
+                            </td>
+                            <td>
+                                {$user.tx}
+                            </td>
+                            <td>
+                                {$user.czrs}
+                            </td>
+                            <td>
+                                {$user.txrs}
+                            </td>
+                            <td>
+                                {$user.sc}
+                            </td>
+                            <td>
+                                {$user.zx}
+                            </td>
+                            <td>
+                                {$user.cq}
+                            </td>
+                            <td>
+                                {$user.sd}
+                            </td>
+                            <td>
+                                {$user.yj}
+                            </td>
+                            <td>
+                                {$user.yjjc}
+                            </td>
+                            <td>
+                                {$user.sg}
+                            </td>
+                            <td>
+                                {$user.kj}
+                            </td>
+                            <td>
+                                {$user.dj}
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </article>
+</div>
+<script src="__ADMINPUBLIC__/static/business/js/main.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        runDatetimePicker(); // 实例化日期控件
+        getUrlParameter(); // 获取URL参数，初始化条件
+
+    });
+
+    function getRequest() {
+        var url = window.location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                //就是这句的问题
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                //之前用了unescape()
+                //才会出现乱码
+            }
+        }
+        return theRequest;
+    }
+
+    // 获取URL参数，初始化条件
+    function getUrlParameter() {
+        var urlObj = getRequest();
+        $("#search-datetime-start").val(urlObj.start);
+        $("#search-datetime-end").val(urlObj.end);
+    }
+</script>

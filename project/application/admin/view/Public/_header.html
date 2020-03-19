@@ -1,0 +1,200 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="favicon.ico">
+    <!--   <link rel="Shortcut Icon" href="favicon.ico" />
+     -->  <!--[if lt IE 9]>
+    <script type="text/javascript" src="lib/html5.js"></script>
+    <script type="text/javascript" src="lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/h-ui.admin.pro/css/h-ui.admin.pro.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/lib/Hui-iconfont/1.0.9/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/h-ui.admin.pro/skin/default/skin.css"
+          id="skin"/>
+    <link rel="stylesheet" type="text/css" href="__ADMINPUBLIC__/static/business/css/style.css"/>
+    <script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="__ADMINPUBLIC__/lib/layer/3.1.1/layer.js"></script>
+    <script type="text/javascript" src="__ADMINPUBLIC__/static/h-ui/js/H-ui.js"></script>
+    <script type="text/javascript" src="__ADMINPUBLIC__/static/h-ui.admin.pro/js/h-ui.admin.pro.js"></script>
+    <!--[if IE 6]>
+    <script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js"></script>
+    <script>DD_belatedPNG.fix('*');</script>
+    <![endif]-->
+    <!--/meta 作为公共模版分离出去-->
+
+    <title>管理后台</title>
+
+</head>
+<body>
+
+<!--_menu 作为公共模版分离出去-->
+<aside class="Hui-admin-aside-wrapper">
+    <div class="Hui-admin-logo-wrapper">
+        <a class="logo navbar-logo" href="#">
+            <i class="va-m iconpic global-logo"></i>
+            <span class="va-m">管理后台</span>
+        </a>
+    </div>
+    <div class="Hui-admin-menu-dropdown bk_2">
+        <dl id="menu-home" class="Hui-menu">
+            <dd class="Hui-menu-item-frist">
+                <ul>
+                    <li><a href="{:url('Index/index')}" title="网站信息"><i class="Hui-iconfont">&#xe625;</i>&nbsp; 总表</a>
+                    </li>
+                </ul>
+            </dd>
+        </dl>
+        <!--遍历菜单-->
+        {volist name="menu_list" id="vo"}
+        {eq name="vo.parentid" value="0"}
+        <dl id="menu-article" class="Hui-menu">
+            <dt class="Hui-menu-title">
+                <i class="Hui-iconfont">{:html_entity_decode($vo['div'], ENT_QUOTES, 'UTF-8');}</i> {$vo.name}<i
+                    class="Hui-iconfont Hui-admin-menu-dropdown-arrow">&#xe6d5;
+            </i>
+            </dt>
+
+            <dd class="Hui-menu-item"
+                style="<?php if($title==$vo['name']) : ?>display: block;<?php else : ?><?php endif; ?>">
+                <ul>
+                    {volist name="menu_list" id="v" }
+                    {switch v.parentid}
+                    {case $vo.id}
+                    <li class="<?php if($title2==$v['name']) : ?>current<?php else : ?><?php endif; ?>">
+
+                        <a href="../../{$v.url}" title=""> <i class="Hui-iconfont">{:html_entity_decode($v['div'],
+                            ENT_QUOTES, 'UTF-8');}</i> &ensp;{$v.name}</a>
+                    </li>
+                    {/case}
+                    {/switch}
+                    {/volist}
+                </ul>
+            </dd>
+            {/eq}
+        </dl>
+        {/volist}
+    </div>
+</aside>
+<div class="Hui-admin-aside-mask"></div>
+<!--/_menu 作为公共模版分离出去-->
+
+<div class="Hui-admin-dislpayArrow">
+    <a href="javascript:void(0);" onClick="displaynavbar(this)">
+        <i class="Hui-iconfont Hui-iconfont-left">&#xe6d4;</i>
+        <i class="Hui-iconfont Hui-iconfont-right">&#xe6d7;</i>
+    </a>
+</div>
+
+<section class="Hui-admin-article-wrapper">
+    <!--_header 作为公共模版分离出去-->
+    <header class="Hui-navbar">
+        <div class="navbar">
+            <div class="container-fluid clearfix">
+                <nav id="Hui-topNav" class="nav navbar-nav">
+                    <ul class="clearfix">
+
+                        <li style="margin-left: 10px">
+                            <span class="f-l">
+								<a href="{:url('admin/wealth/recharge')}?statusifyID=1" id="recharge"
+                                   class="btn btn-danger radius"> 充值({$data_count['recharge']})</a>
+							</span>
+                        </li>
+                        <li style="margin-left: 10px">
+                            <span class="f-l">
+								<a href="{:url('admin/wealth/withdrawal')}?statusifyID=1" id="withdrawal"
+                                   class="btn btn-danger radius"> 提现({$data_count['withdrawal']})</a>
+							</span>
+                        </li>
+                        <li style="margin-left: 10px">
+                            <span class="f-l">
+								<a href="javascript:;" onclick="manual('yes')" class="btn btn-primary radius"> 手动充值</a>
+							</span>
+                        </li>
+                        <li style="margin-left: 10px">
+                            <span class="f-l">
+								<a href="javascript:;" onclick="manual('no')" class="btn btn-primary radius">手动扣款</a>
+							</span>
+                        </li>
+
+                    </ul>
+                </nav>
+
+                <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar">
+                    <ul class="clearfix">
+                        <li>{switch name="$Request.session.admin.role"}
+                            {case value="1"}超级管理员{/case}
+                            {case value="2"}管理员{/case}
+                            {case value="3"}出纳{/case}
+                            {case value="4"}会计{/case}
+                            {default /} 售后
+                            {/switch}
+                        </li>
+                        <li class="dropDown dropDown_hover"><a href="#" class="dropDown_A">{$Request.session.admin.name}
+                            <i class="Hui-iconfont">&#xe6d5;</i></a>
+                            <ul class="dropDown-menu menu radius box-shadow">
+                                <li><a href="{:url('index/end_admin')}">切换账户</a></li>
+                                <li><a href="{:url('index/end_admin')}">退出</a></li>
+                            </ul>
+                        </li>
+
+                        <li id="Hui-skin" class="dropDown dropDown_hover right">
+                            <a href="javascript:;" class="dropDown_A" title="换肤"><i class="Hui-iconfont"
+                                                                                    style="font-size:18px">&#xe62a;</i></a>
+                            <ul class="dropDown-menu menu radius box-shadow">
+                                <li><a href="javascript:;" data-val="default" title="默认（蓝色）">默认（深蓝）</a></li>
+                                <li><a href="javascript:;" data-val="black" title="黑色">黑色</a></li>
+                                <li><a href="javascript:;" data-val="green" title="绿色">绿色</a></li>
+                                <li><a href="javascript:;" data-val="red" title="红色">红色</a></li>
+                                <li><a href="javascript:;" data-val="yellow" title="黄色">黄色</a></li>
+                                <li><a href="javascript:;" data-val="orange" title="橙色">橙色</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <script>
+
+        function manual(type) {
+            if (type == 'yes') {
+                var title = '手动充值'
+            } else {
+                var title = '手动扣款'
+            }
+            var index = layer.open({
+                type: 2,
+                title: title,
+                fixed: false, //不固定
+                maxmin: true,
+                shade: 0.4,
+                area: ["50%", "50%"],
+                content: "{:url('admin/wealth/manual','type=TYPE')}".replace('TYPE', type)
+            });
+        }
+
+        var intervalId = setInterval(function () {
+            $.ajax({
+                url: "{:url('admin/index/get_info_money')}",
+                dataType: 'JSON',
+                type: 'POST',
+                success: function (data) {
+                    if (data.code == 200) {
+                        $('#recharge').text('充值' + '(' + data.data.recharge + ')');
+                        $('#withdrawal').text('提现' + '(' + data.data.withdrawal + ')');
+                    } else {
+                        clearInterval(intervalId);
+                    }
+                }
+            })
+        }, 5000);
+
+    </script>

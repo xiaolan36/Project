@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title>定期理财</title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <script src="__WJS__/mui.min.js"></script>
+    <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+
+
+        .mui-table-view-cell:after {
+            left: 0px;
+            background-color: #292828;
+        }
+
+        .mui-table-view:before {
+            background-color: #292828;
+        }
+
+        .mui-table-view:after {
+            background-color: #292828;
+        }
+
+        .mui-input-group:before {
+            height: 0px
+        }
+
+        .mui-input-group:after {
+            height: 0px;
+        }
+
+        .header {
+            background: #1f253d;
+            top: 0;
+            box-shadow: 0 0px 0px #ccc;
+            -webkit-box-shadow: 0 0px 0px #ccc;
+        }
+
+        .spanleixing {
+            position: absolute;
+            color: #CCCCCC;
+            margin-top: -11%;
+            margin-left: 5%;
+            font-size: 0.9em;
+            font-family: '微软雅黑';
+        }
+
+        .ulleixing {
+            background: #1a1d2e;
+            color: #0062CC;
+            font-size: 0.9em;
+            box-shadow: 2px 0px 20px 0px #007AFF;
+            margin-top: 16%;
+            font-family: '微软雅黑';
+            border-radius: 15px;
+            width: 90%;
+            left: 5%;
+        }
+
+        .h1 {
+            font-family: '微软雅黑';
+            color: #fff;
+        }
+
+        .form {
+            top: 60px;
+            height: 0px;
+            width: 80%;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+        }
+
+        .p {
+            font-family: '微软雅黑';
+            color: aquamarine;
+        }
+
+        .div {
+            border-radius: 30px;
+            background-color: #fff;
+        }
+
+        .input {
+            color: #0062CC;
+            margin-top: 10px;
+            margin-left: 22%;
+            font-size: 0.9em;
+            font-family: '微软雅黑';
+        }
+
+        .img {
+            position: absolute;
+            width: 35px;
+            margin-left: 15px;
+            margin-top: 4px;
+        }
+
+        .button {
+            line-height: 2em;
+            font-size: 0.9em;
+            width: 100%;
+            font-family: '微软雅黑';
+            border-radius: 30px;
+            border: 0px solid;
+            background: linear-gradient(45deg, BLUE, purple);
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .font-white {
+            color: white;
+        }
+
+        .ts-btn {
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body style="background:#f2f2f2;">
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title h1">定期理财</h1>
+</header>
+<div class="mui-input-group" style="margin-top: 5em;background: transparent;">
+    <div class="mui-input-row">
+        <label class="font-white">账户余额：</label>
+        <div class="mui-input-clear font-white" style="line-height: 1.1;float: left;width: 35%;padding: 11px 15px;">{:sprintf('%.2f',$money)}元</div>
+    </div>
+    <div class="mui-input-row" style="">
+        <label class="font-white">已存入金额：</label>
+        <span class="mui-input-clear font-white" style="line-height: 1.1;float: left;width: 35%;padding: 11px 15px;">{:sprintf('%.2f',$join_money)}元</span>
+    </div>
+    <div class="mui-input-row" style="">
+        <label class="font-white">可存入金额：</label>
+        <span class="mui-input-clear font-white" style="line-height: 1.1;float: left;width: 35%;padding: 11px 15px;">{:sprintf('%.2f',$left_money)}元</span>
+    </div>
+    <br>
+    <div class="mui-input-row">
+        <label class="font-white">存入金额：</label>
+        <input type="text" class="mui-input-clear font-white " id="crje" placeholder="请输入存入金额">
+    </div>
+    <br>
+    <div class="mui-input-row" id="xzzq" style="border: none; height: unset">
+        <label class="font-white">选择周期</label>
+        <div style="width: 65%;float: left">
+            <foreach name='days' item='info' key="key">
+                <if condition="$key==0">
+                    <div class="mui-input-row mui-radio mui-left">
+
+                        <label class="font-white">{$info.day}<?php echo  ($day_min==60)?"分":'天';?>
+                            <span class="mui-badge mui-badge-primary " style="float: right">日利率：{:sprintf('%.2f',$info['rate'])}%</span>
+                        </label>
+                        <input name="rate_id" type="radio" checked="checked" value="{$info.id}">
+                    </div>
+                    <else/>
+                    <div class="mui-input-row mui-radio mui-left">
+
+                        <label class="font-white">{$info.day}<?php echo  ($day_min==60)?"分":'天';?>
+                            <span class="mui-badge mui-badge-primary " style="float: right">日利率：{:sprintf('%.2f',$info['rate'])}%</span>
+                        </label>
+                        <input name="rate_id" type="radio" value="{$info.id}">
+                    </div>
+                </if>
+            </foreach>
+        </div>
+    </div>
+    <br>
+
+    <div class="mui-button-row">
+
+        <button type="button" class="mui-btn mui-btn-danger button" id="submit" onclick="setdraw()">提交</button>
+    </div>
+</div>
+</body>
+<script>
+    mui.init({
+        swipeBack: true //启用右滑关闭功能
+    });
+</script>
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript">
+    function xzzq(data,obj) {
+		$('#xzzq>button').removeClass("mui-btn-warning");
+		$('#xzzq>button').addClass("mui-btn-royal");
+		$(obj).removeClass("mui-btn-royal");
+		$(obj).addClass("mui-btn-warning");
+		$('#crzq').val(data);
+    }
+</script>
+<script type="text/javascript">
+
+    function setdraw() {
+        //验证注册
+        var price = $("#crje").val();
+        var rate_id =$('input[name="rate_id"]:checked').val();
+        //alert(way);
+        if (price === '' || price == null  || price==="0" ) {
+            layer.msg('请输入存入金额');
+            return false;
+        }
+
+        var post_url = "{:U('Common/crje')}";
+       var post_data={};
+       post_data.price=price;
+       post_data.rate_id=rate_id;
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            data: post_data,
+            dataType: "json",
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.msg);
+                    setTimeout(function (args) {
+                        window.location.href = "{:U('User/yesxlist')}";
+                    }, 3000);
+                } else {
+                    layer.msg(data.msg);
+                }
+            }
+        });
+    }
+
+
+</script>
+</html>

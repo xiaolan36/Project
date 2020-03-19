@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+    <script src="__WJS__/mui.min.js"></script>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__COM__/layer/layer.js"></script>
+    <script type="text/javascript" src="__COM__/js/index.js"></script>
+    <script type="text/javascript" src="__COM__/js/public.js"></script>
+    <script type="text/javascript" src="__COM__/js/common.js"></script>
+    <script type="text/javascript" src="__COM__/js/Uploader.swf"></script>
+    <script type="text/javascript" src="__COM__/js/webuploader.js"></script>
+    <script src="__WJS__/clipboard.min.js"></script>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+    <style>
+        .mui-table-view-cell:after,
+        .mui-table-view:before,
+        .mui-table-view:after,
+        .mui-input-group:before,
+        .mui-input-group:before,
+        .mui-input-group:after {
+            content: none;
+        }
+
+        .fuzhi-list {
+            margin: 54px auto 0;
+            background: #fff;
+            width: 6.9rem;
+            padding: .2rem 0;
+            box-sizing: border-box;
+            border-radius: .2rem;
+        }
+
+        .fuzhi-list li {
+            padding: .12rem .3rem;
+
+            display: -webkit-flex;
+            display: flex;
+            align-items: center;
+        }
+
+        .p {
+            font-family: '微软雅黑';
+            color: #4D4D4D;
+            font-size: .3rem;
+            width: 1.48rem;
+        }
+
+        .p1 {
+            font-family: '微软雅黑';
+            font-size: .3rem;
+            color: #1A1A1A;
+            width: 3.86rem;
+        }
+
+        .fuzhi-list li button {
+            width: 1rem;
+            height: .52rem;
+            line-height: .52rem;
+            border: none;
+            padding: 0;
+            border-radius: .1rem;
+            background: linear-gradient(90deg, rgba(255, 145, 59, 1) 0%, rgba(255, 85, 54, 1) 100%);
+            font-size: .28rem;
+            color: #fff;
+        }
+
+        .divc {
+            border-radius: 30px;
+            background-color: #fff;
+            margin-bottom: 8px;
+        }
+
+
+        .int {
+            color: #0062CC;
+            /*margin-top:10px;*/
+            margin-left: 22%;
+            font-size: 0.9em;
+            font-family: '微软雅黑';
+        }
+
+
+        .int {
+            position: absolute;
+        }
+
+        .input {
+            margin-top: 2px;
+        }
+
+        .mui-table-view-cell:after {
+            height: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .abutton {
+            width: 1rem;
+            height: .52rem;
+            line-height: .52rem;
+            border: none;
+            padding: 0;
+            border-radius: .1rem;
+            background: linear-gradient(90deg, rgba(255, 145, 59, 1) 0%, rgba(255, 85, 54, 1) 100%);
+            font-size: .28rem;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title h1">银行卡充值</h1>
+</header>
+<ul class="mui-table-view ul fuzhi-list" id="binfo" style="display:block;">
+    <li class="mui-table-view-cell mui-collapse-content">
+        <p class="p">充值类型:</p>
+
+        <p class="p1" id="cz_yh">{$card.bankname}</p>
+        <input type="text" value="{$card.bankname}" id="fzyhk1_s" style='opacity: 0;position: absolute;'>
+        <button data-clipboard-text="" id="fzyhk1">复制</button>
+    </li>
+
+    <li class="mui-table-view-cell mui-collapse-content">
+        <p class="p">收款姓名:</p>
+        <p class="p1" id="cz_xm">{$card.username}</p>
+        <input value="{$card.username}" id="fzyhk2_s" style='opacity: 0;position: absolute;' type="text">
+        <button data-clipboard-text="" id="fzyhk2">复制</button>
+    </li>
+    <li class="mui-table-view-cell mui-collapse-content">
+        <p class="p">收款账号:</p>
+        <p class="p1" id="cz_kh">{$card.banknum}</p>
+        <input value="{$card.banknum}" id="fzyhk3_s" style='opacity: 0;position: absolute;' type="text">
+        <button data-clipboard-text="" id="fzyhk3">复制</button>
+    </li>
+</ul>
+
+<form class="mui-input-group form group-list mt60 pipei-list" name="AddUser" action="{:url('/Wealth/bank_rc')}"
+      id="registerForm">
+    <input type="hidden" value="{$card.id}" name="bankid">
+    <input type="hidden" value="1" name="banktype">
+    <div class="groupbox" style="margin-top: -40px;display: none">
+        <div class="mui-input-row">
+            <span>ID</span>
+            <input type="text" class="int" name="uname" value="{$user.userid}" placeholder="充值姓名">
+        </div>
+        <div class="mui-input-row">
+            <span>手机号</span>
+            <input type="text" class="int" name="account" value="{$user.phone}" placeholder="充值账号">
+        </div>
+    </div>
+    <div class="groupbox" style="margin-top: -40px">
+        <div id="money_easy" style="display: flex;justify-content: space-evenly;    padding-top: 20px;">
+            <a class="abutton">100</a>
+            <a class="abutton">500</a>
+            <a class="abutton">1000</a>
+        </div>
+        <div id="money_easy_two" style="display: flex;justify-content: space-evenly;margin-top: 15px;    padding-top: 20px;padding-bottom: 20px">
+            <a class="abutton">3000</a>
+            <a class="abutton">5000</a>
+            <a class="abutton">10000</a>
+        </div>
+    </div>
+
+    <br/>
+    <div class="groupbox jine-box">
+        <div class="h6">充值金额</div>
+        <div class="mui-input-row">
+            <span>￥</span>
+            <input type="number" class="int mui-input-clear" name="myprice" onblur="getslu()" value="" id="myprice"
+                   placeholder="0">
+        </div>
+
+    </div>
+
+    <div class="mui-button-row">
+        <button type="button" class="mui-btn mui-btn-danger button dangers" style="display:block" id="submit"
+                onclick="alipaynow()">提交
+        </button>
+    </div>
+    <div class="mui-input-row" style="    font-size: 15px;margin-top: 20px;text-align: center;color: red;">重要提示：请务必根据系统为您匹配的金额进行转账（含小数点后两位），否则充值无法成功到账！</div>
+    <p></p>
+</form>
+<div class="mui-card-content"
+     style="display:none;position: absolute; bottom:-10%; padding: 9%;background:#1f253d; width: 100%; border-radius: 10px;box-shadow:2px 0px 20px 0px #007AFF;padding-top: 10px;padding-bottom: 10px;">
+        <span style="top: 160px; color: #ccc;font-family: '微软雅黑';font-size: 0.8em;left: 23px;">
+            充值注意事项<br>
+
+            1.全天24小时可以转账充值；<br>
+
+            2.禁止向上级递交保证金，否则出现资金问题，平台概不负责；<br>
+
+            3.平台禁止代充，充值失败可以选择其他通道；<br>
+
+            4.转账成功后24小时内没到账联系客服处理。
+        </span>
+</div>
+
+</body>
+
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script>
+    var btns = document.querySelectorAll('button');
+    var clipboard = new ClipboardJS(btns);
+    clipboard.on('success', function (e) {
+        layer.msg('复制成功');
+
+    });
+
+    clipboard.on('error', function (e) {
+
+        console.log(e);
+
+    });
+
+</script>
+<script type="text/javascript">
+
+    function shownow() {
+        var mypr = parseInt($("#price").val());
+        if (mypr < 100 || !mypr) {
+            layer.msg('充值金额不能低于100');
+            return false;
+        } else {
+            layer.confirm('请根据系统为您ID分配的额度充值！', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                var yhk_msg = layer.msg('系统正在为您分配额度');
+                $.ajax({
+                    type: "POST",
+                    url: '{:url("/Wealth/yhkrandom")}',
+                    data: {},
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.status === 1) {
+                            $("#cz_yh").text(data.data.cz_yh);
+                            $("#cz_kh").text(data.data.cz_kh);
+                            $("#cz_xm").text(data.data.cz_xm);
+                            $("#bankid").val(data.data.bank_id);
+                            $("#fzxm").attr("data-clipboard-text", data.data.cz_xm);
+                            $("#fzkh").attr("data-clipboard-text", data.data.cz_kh);
+                            $("#fzyhk").attr("data-clipboard-text", data.data.cz_yh);
+                            $("#binfo").show();
+                            $("#submit").show();
+                            $("#showb").hide();
+                            layer.close(yhk_msg);
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                });
+            });
+        }
+
+    }
+
+    function getslu() {
+        var mypr = parseInt($("#myprice").val());
+        if (mypr < 100) {
+            layer.msg('充值金额不能低于100');
+            return false;
+        }
+
+        var mor = Math.floor(Math.random() * 100) / 100;
+        var price = mypr + mor;
+        $("#price").val(price);
+        $("#myprice").val(price);
+        $("#myprice").attr('readonly', 'readonly');
+    }
+
+    $('#fzyhk1').click(function () {
+        var Url2 = document.getElementById("fzyhk1_s");
+        Url2.select(); // 选择对象
+        document.execCommand('copy'); // 执行浏览器复制命令
+        alert("已复制好，可贴粘。");
+    })
+    $('#fzyhk2').click(function () {
+        var Url2 = document.getElementById("fzyhk2_s");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好，可贴粘。");
+    })
+    $('#fzyhk3').click(function () {
+        var Url2 = document.getElementById("fzyhk3_s");
+        Url2.select(); // 选择对象
+        document.execCommand("Copy"); // 执行浏览器复制命令
+        alert("已复制好，可贴粘。");
+    })
+
+    $('#money_easy >a').each(function () {
+        $(this).click(function () {
+            var mor = Math.floor(Math.random() * 100) / 100;
+            var price = parseInt($(this).text()) + mor;
+            $('#myprice').val(price)
+        });
+    });
+
+    $('#money_easy_two >a').each(function () {
+        $(this).click(function () {
+            var mor = Math.floor(Math.random() * 100) / 100;
+            var price = parseInt($(this).text()) + mor;
+            $('#myprice').val(price)
+        });
+    });
+
+    function alipaynow() {
+        var thisform = document.forms['AddUser'];
+        var post_url = $("form[name='AddUser']").attr('action');
+        var post_data = $("form[name='AddUser']").serialize();
+        // $("#submit").attr('disabled', true)
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            data: post_data,
+            dataType: "json",
+            success: function (data) {
+
+                if (data.status == 1) {
+                    layer.msg(data.msg);  //,data.url);
+                    setTimeout(function (args) {
+                        window.location.href = "{:url('/Wealth/wealth_log')}";
+                    }, 3000);
+                } else {
+                    layer.msg(data.msg);
+                }
+            }
+        });
+    }
+
+</script>
+<script type="text/javascript">
+    function copy(message) {
+        var input = document.createElement("input");
+        input.value = message;
+        input.setAttribute("class", "yincang");
+        document.body.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length), document.execCommand('Copy');
+        document.body.removeChild(input);
+        layer.msg("复制成功");
+    }
+</script>
+<style>
+    .z_alert {
+        color: #333;
+    }
+
+    .z_alert span {
+        color: #0da8f5;
+    }
+</style>
+<script type="text/javascript">
+    $(function () {
+
+    });
+</script>
+
+</html>

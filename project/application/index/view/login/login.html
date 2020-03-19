@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- saved from url=(0026)http://103.200.29.54/login -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>抢单</title>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <link href="__WCSS__/login.css" rel="stylesheet">
+    <script src="__WJS__/mui.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        mui.init();
+    </script>
+    <style>
+
+    </style>
+</head>
+<body style="background: #FFFFFF;">
+<img src="__WIMG__/logo.png" class="img">
+<form name="formlogin" id="loginForm" class="formlogin mui-input-group form" method="post"
+      action="{:url('Login/login')}">
+    <div class="mui-input-row formdiv">
+        <img src="__WIMG__/nubmer.png" class="formimg">
+        <input type="number" value="" name="account" style="margin-left:16%;position:absolute;top:-9px;" maxlength="11"
+               autocomplete="off" id="number" class="forminput" placeholder="请输入手机号">
+    </div>
+
+    <div class="mui-input-row formdiv2">
+        <img src="__WIMG__/mima.png" class="formimg2">
+        <input type="password" value="" name="password" maxlength="32" class="forminput2" placeholder="请输入密码">
+    </div>
+    <div class="mui-card-content-inner formdiv3">
+        <a href="{:url('login/getpsw')}">忘记密码？</a>
+    </div>
+    <br><br><br>
+    <div class="mui-button-row">
+        <button type="button" onclick="login()" class="mui-btn mui-btn-danger login" id="submit">登录</button>
+    </div>
+    <br>
+    <div class="mui-card-content">
+
+        <div class="mui-card-content-inner">
+            <p class="reg">还没有账号？<a href="{:url('Login/register')}"> 立即注册</a></p>
+
+        </div>
+        <div class="mui-card-content-inner">
+            <p style="text-align: center; left: 28%;  font-family: &#39;微软雅黑&#39;; color:linear-gradient(45deg,BLUE,purple);">
+                <a href="{$app_link['app_link']}"> APP下载</a></p>
+        </div>
+    </div>
+</form>
+
+</body>
+<script src="__WJS__/jquery1.11.1.min.js"></script>
+
+<!--表单验证-->
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript" src="__COM__/js/index.js"></script>
+</html>

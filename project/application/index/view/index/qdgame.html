@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<!-- saved from url=(0048)http://103.200.29.54/index.html#tabbar-with-chat -->
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>抢单</title>
+
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <link href="__WCSS__/app.css" rel="stylesheet">
+    <link href="__WCSS__/qdgame.css" rel="stylesheet">
+    <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="__COM__/layer/layer.js"></script>
+    <script type="text/javascript" src="__COM__/js/index.js"></script>
+    <style type="text/css">
+        .qd {
+            padding-left: 10px;
+            padding-top: 10px;
+        }
+
+        .qd .title {
+            color: #fff;
+            margin-left: 5%;
+            font-family: '微软雅黑';
+        }
+
+        .qd .t-value {
+            color: #FFFF00;
+            margin-left: 10px;
+            font-family: '微软雅黑';
+            font-size: 1.2em;
+        }
+    </style>
+    <script type="text/javascript">
+        //stanislav.it/how-to-prevent-ios-standalone-mode-web-apps-from-opening-links-in-safari
+        if (("standalone" in window.navigator) && window.navigator.standalone) {
+            var noddy, remotes = false;
+            document.addEventListener('click', function (event) {
+                noddy = event.target;
+                while (noddy.nodeName !== "A" && noddy.nodeName !== "HTML") {
+                    noddy = noddy.parentNode;
+                }
+                if ('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)) {
+                    event.preventDefault();
+                    document.location.href = noddy.href;
+                }
+            }, false);
+        }
+    </script>
+</head>
+<input type="text" value="{$clist.start}" id="start">
+<input type="hidden" value="{$clist.end}" id="end">
+<input type="hidden" value="{$clist.level1}" id="level1">
+<input type="hidden" value="{$clist.level2}" id="level2">
+<input type="hidden" value="{$clist.level3}" id="level3">
+<input type="hidden" value="{$clist.level4}" id="level4">
+<input type="hidden" value="{$clist.level5}" id="level5">
+<body style="background:#f2f2f2;" class="mui-ios mui-ios-11 mui-ios-11-0">
+<input type="hidden" value="{$ulist.username.}" id="username">
+<input type="hidden" value="{$ulist.mobile}" id="mobile">
+<input type="hidden" value="{$ulist.userqq}" id="userqq">
+<input type="hidden" value="{$ulist.wx_no}" id="wx_no">
+<input type="hidden" value="{$count}" id="count">
+<input type="hidden" value="<?=$address[0]['id']?>" id="address">
+<input type="hidden" value="{$ulist['money']}" id="sum">
+<input type="hidden" value="{$today_orders}" id="today_orders">
+<input type="hidden" value="{$date}" id="date">
+<div id="tabbar-with-chat" class="mui-control-content mui-active">
+    <header class="mui-bar mui-bar-nav header">
+        <h1 class="mui-title h1">抢单</h1>
+    </header>
+    <div class="mui-card-content qd">
+        <div class="mui-row">
+            <div class="mui-col-sm-8 mui-col-xs-8">
+                <div class="mui-table-view-cell">
+                    <span class="title">可用余额 :</span>
+                    <span class="t-value">{:round($max_pipeinone,2)}</span>
+                </div>
+            </div>
+            <div class="mui-col-sm-4 mui-col-xs-4">
+                <div class="mui-table-view-cell" style="padding-left: 0;">
+                    <button type="button"
+                            style="background: linear-gradient(45deg,BLUE,purple);color: #fff;border:none;font-size: .7em;border-radius: 8px;line-height: 0.8em;">
+                        佣金加成<?php echo $qd_yjjc*100;?>%
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-9 mui-col-xs-9">
+                <div class="mui-table-view-cell">
+                    <span class="title">账户冻结资金 : </span>
+                    <span class="t-value">{$dongjie}</span>
+                </div>
+            </div>
+            <div class="mui-col-sm-3 mui-col-xs-3">
+                <div class="mui-table-view-cell">
+
+                </div>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-9 mui-col-xs-9">
+                <div class="mui-table-view-cell">
+                    <span class="title">今日抢单次数 : </span>
+                    <span class="t-value">{$today_orders} </span>
+                </div>
+            </div>
+            <div class="mui-col-sm-3 mui-col-xs-3">
+                <div class="mui-table-view-cell">
+                </div>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-8 mui-col-xs-8">
+                <div class="mui-table-view-cell">
+                    <span class="title">总抢单次数 : </span>
+                    <span class="t-value">{$orders} </span>
+                </div>
+            </div>
+            <div class="mui-col-sm-4 mui-col-xs-4">
+                <div class="mui-table-view-cell">
+                    <button type="button" class="mui-btn-danger "
+                            style="right:10px;border-radius: 30px;border: 0px solid; background: red;"
+                            onclick="jump_yesx();">定期理财
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <input type="hidden" name="qdclass" id="qdclass" value="1">
+    <div class="mui-button-row">
+        <button type="button" class="mui-btn mui-btn-danger pipei" id="pipeinnow" onclick="start_qd()">自动抢单</button>
+    </div>
+    <div class="mui-button-row">
+        <button type="button" class="mui-btn mui-btn-danger "
+                style="line-height: 2em;margin-top: 20px;font-size: 0.9em;width: 90%;font-family: '微软雅黑';border-radius: 30px;border: 0px solid; background: red;"
+                id="autopipei" onclick="start_auto()">停止抢单
+        </button>
+    </div>
+    <div class="mui-button-row">
+    </div>
+    <!--收单列表-->
+    <div id="tabbar-with-map" class="mui-control-content">
+    </div>
+
+
+    <nav class="mui-bar mui-bar-tab" style="background:#fff;">
+
+        <a class="mui-tab-item" href="{:U('Index/index')}">
+            <span class="mui-icon mui-icon-home"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a class="mui-tab-item mui-active" href="{:U('Index/qdgame')}">
+            <span class="mui-icon mui-icon-email"></span>
+            <span class="mui-tab-label">抢单</span>
+        </a>
+
+        <a class="mui-tab-item " href="{:U('Index/shoudan')}">
+            <span class="mui-icon mui-icon-gear"></span>
+            <span class="mui-tab-label">收单</span>
+        </a>
+        <a class="mui-tab-item" href="{:U('Index/kefu')}">
+            <span class="mui-icon mui-icon-weixin"></span>
+            <span class="mui-tab-label">客服</span>
+        </a>
+        <a class="mui-tab-item" href="{:U('User/index')}">
+            <span class="mui-icon mui-icon-contact"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+</body>
+
+<script type="text/javascript">
+    $('#checkedclass_wx').click(function () {
+        $('#checkedclass_wx').addClass("mui-selected");
+        $('#checkedclass_zfb').removeClass("mui-selected");
+        $('#checkedclass_bank').removeClass("mui-selected");
+        $('#qdclass').val(1);
+    });
+    $('#checkedclass_zfb').click(function () {
+        $('#checkedclass_zfb').addClass("mui-selected");
+        $('#checkedclass_wx').removeClass("mui-selected");
+        $('#checkedclass_bank').removeClass("mui-selected");
+        $('#qdclass').val(2);
+    });
+    $('#checkedclass_bank').click(function () {
+        $('#checkedclass_bank').addClass("mui-selected");
+        $('#checkedclass_zfb').removeClass("mui-selected");
+        $('#checkedclass_wx').removeClass("mui-selected");
+        $('#qdclass').val(3);
+    });
+
+</script>
+<script type="text/javascript">
+    function start_qd() {
+        $("#pipeinnow").attr('disabled', true);
+        var address = $('#address').val();
+        var username = $('#username').val();
+        var mobile = $('#mobile').val();
+        var userqq = $('#userqq').val();
+        var wx_no = $('#wx_no').val();
+        var count = $('#count').val();
+        var sum = $('#sum').val();
+        var today_orders = $('#today_orders').val();
+        var date = $('#date').val();
+        var start = $('#start').val();
+        var end = $('#end').val();
+        var level1 = $('#level1').val();
+        var level2 = $('#level2').val();
+        var level3 = $('#level3').val();
+        var level4 = $('#level4').val();
+        var level5 = $('#level5').val();
+
+        if (!wx_no || !userqq || !mobile || !username) {
+            layer.msg("个人资料未完善，禁止抢单");
+            setTimeout(function (args) {
+                window.location.href = "/User/xinxi/";
+            }, 1000);
+            return;
+        }
+        if (!address) {
+            layer.msg("收货地址未填写，禁止抢单");
+            setTimeout(function (args) {
+                window.location.href = "/User/erweima";
+            }, 1000);
+            return;
+        }
+        if (count != 0) {
+            layer.msg("您有一条订单未处理或在冻结中，请及时处理");
+            setTimeout(function (args) {
+                window.location.href = "/Index/shoudan";
+            }, 1000);
+            return;
+        }
+        // if(parseInt(date) < start || parseInt(date) >= end){
+        //   layer.msg('抢单时间为早上'+start+'点到晚上'+end+'点');
+        //   return;
+        // }
+        if (sum == '' || sum == null || sum < 30) {
+            layer.msg('账户金额不足，最低抢单金额为30');
+            return;
+        }
+        if (sum >= 100 && sum <= 24999 && parseInt(today_orders) >= level1) {
+            layer.msg('您的充值金额为' + sum + '，每日最大抢单数为' + level1);
+            return;
+        }
+        if (sum >= 25000 && sum <= 49999 && parseInt(today_orders) >= level2) {
+            layer.msg('您的充值金额为' + sum + '，每日最大抢单数为' + level2);
+            return;
+        }
+        if (sum >= 50000 && sum <= 74999 && parseInt(today_orders) >= level3) {
+            layer.msg('您的充值金额为' + sum + '，每日最大抢单数为' + level3);
+            return;
+        }
+        if (sum >= 75000 && sum <= 99999 && parseInt(today_orders) >= level4) {
+            layer.msg('您的充值金额为' + sum + '，每日最大抢单数为' + level4);
+            return;
+        }
+        if (sum >= 100000 && parseInt(today_orders) >= level5) {
+            layer.msg('您的充值金额为' + sum + '，每日最大抢单数为' + level5);
+            return;
+        }
+
+        var mycars = new Array("请耐心等待，马上就来了", "运气不好请等待，加油", "好遗憾，这一单被别人抢走了", "很遗憾没抢到", "没有抢到，继续加油", "就差一点就抢到了");
+        var j = random(1, 5);
+        layer.msg(mycars[j]);
+        setInterval(auto, 5000);
+    }
+
+    function start_auto() {
+        var qdclass = $('#qdclass').val();
+        $("#autopipei").attr('disabled', true);
+        $.post("{:U('Index/pipeiauto')}",
+            {'qdclass': qdclass},
+            function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.msg);  //,data.url);
+                    window.location.href = "{:U('Index/qdgame')}";
+
+                } else {
+                    layer.msg(data.msg);
+                }
+            });
+    }
+
+    function random(lower, upper) {
+        return Math.floor(Math.random() * (upper - lower + 1)) + lower;
+    }
+
+    function sleep(numberMillis) {
+        var now = new Date();
+        var exitTime = now.getTime() + numberMillis;
+        while (true) {
+            now = new Date();
+            if (now.getTime() > exitTime)
+                return;
+        }
+    }
+
+    function jump_yesx() {
+
+        window.location.href = "{:U('Common/yesx')}";
+
+    }
+
+    function auto() {
+
+		var qdclass = $('#qdclass').val();
+		$("#pipeinnow").attr('disabled', true);
+		$.post("{:U('Index/pipeiorder')}",
+				{'qdclass': qdclass},
+				function (data) {
+					if (data.status == 1) {
+						layer.msg(data.msg);  //,data.url);
+						//alert (data.id);
+						//var id = data.id;
+						window.location.href = "/Index/qiangdanxq/id/" + data.id;
+
+					} else {
+						layer.msg(data.msg);
+					}
+				});
+		return;
+		var qd_nd = <?=$clist['qd_nd']?>;
+
+		var mycars = new Array("请耐心等待", "运气不好请等待，加油", "这一单被别人抢走了", "很遗憾没抢到 ", "没有抢到，继续加油", "差一点就抢到了");
+        var i = random(1, qd_nd);
+        //sleep(3000);
+        if (i != 1) {
+            var j = random(1, 5);
+            layer.msg(mycars[j]);
+        } else {
+            var qdclass = $('#qdclass').val();
+            $("#pipeinnow").attr('disabled', true);
+            $.post("{:U('Index/pipeiorder')}",
+                {'qdclass': qdclass},
+                function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.msg);  //,data.url);
+                        //alert (data.id);
+                        //var id = data.id;
+                        window.location.href = "/Index/qiangdanxq/id/" + data.id;
+
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                });
+        }
+    }
+
+
+</script>
+
+
+</html>

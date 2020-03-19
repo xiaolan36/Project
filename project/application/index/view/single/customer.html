@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)http://103.200.29.54/index.html#tabbar -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+    <title>客服</title>
+
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <link href="__WCSS__/app.css" rel="stylesheet">
+    <link href="__WCSS__/indexindex.css" rel="stylesheet">
+
+    <style>
+        .bgcolor10{background: #8A6DE9;}
+        .bgcolor9{background:grey;}
+        .bgcolor8{background: darkslateblue;}
+        .bgcolor7{background: darkgray;}
+        .bgcolor6{background: #EC971F;}
+        .bgcolor5{background: #007aff;}
+        .bgcolor4{background: orange;}
+        .bgcolor3{background: burlywood;}
+        .bgcolor2{background:  blue;}
+        .bgcolor1{background: red;}
+
+
+    </style>
+	<script type="text/javascript">
+		//stanislav.it/how-to-prevent-ios-standalone-mode-web-apps-from-opening-links-in-safari
+		if(("standalone" in window.navigator) && window.navigator.standalone){
+			var noddy, remotes = false;
+			document.addEventListener('click', function(event) {
+				noddy = event.target;
+				while(noddy.nodeName !== "A" && noddy.nodeName !== "HTML") {
+					noddy = noddy.parentNode;
+				}
+				if('href' in noddy && noddy.href.indexOf('http') !== -1 && (noddy.href.indexOf(document.location.host) !== -1 || remotes)){
+					event.preventDefault();
+					document.location.href = noddy.href;
+				}
+			},false);
+		}
+	</script>
+</head>
+<body style="background:#f2f2f2; line-height: 17px;" class="mui-ios mui-ios-11 mui-ios-11-0">
+<div id="tabbar" class="mui-control-content mui-active">
+
+    <img src="__WIMG__/banner.jpg" class="img">
+    <p>
+	<span style="color:#337FE5;"><span style="color:#337FE5;"><br />
+</span></span>
+    </p>
+
+
+    <div class="mui-button-row">
+        <a  class="mui-btn mui-btn-danger pipei" id="pipeinnow" href="{$config['kefu_link']}">在线咨询</a>
+    </div>
+</div>
+{include file="Public/menu" title="$title" /}
+</body>
+</html>

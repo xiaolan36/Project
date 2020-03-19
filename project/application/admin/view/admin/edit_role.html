@@ -1,0 +1,136 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        账号管理
+        <span class="c-gray en">
+            /
+        </span>
+        角色管理
+        <span class="c-gray en">
+            /
+        </span>
+        添加角色
+    </nav>
+    <article class="clearfix pd-20">
+        <form id="role_from" class="form form-horizontal">
+            <div class="row cl">
+                <label class="form-label col-xs-4 col-sm-3">权限设置：</label>
+                <div class="formControls col-xs-8 col-sm-9">
+                    <input type="hidden" name="roleid" value="<?php echo $roleid; ?>">
+
+                    {volist name="menu_list" id="vo"}
+                    {eq name="vo.parentid" value="0"}
+
+                    <dl class="permission-list">
+                        <div class="per permission-list">
+                            <dt style="background-color: #efefef;padding: 5px 10px;">
+                                <label>
+                                    <input type="checkbox" <?php if (isset($vo['yes'])): ?>
+                                    checked="checked";
+                                    <?php endif ?> value="<?php echo $vo['id'] ?>" name="Character[]" id="user-Character
+                                    " >
+                                    <?php echo $vo['name']; ?>
+                                </label>
+                            </dt>
+
+                            <dd style="padding: 10px;padding-left: 30px;">
+                                {volist name="menu_list" id="vs" }
+                                {switch vs.parentid}
+                                {case $vo.id}
+
+                                <label class="">
+                                    <input type="checkbox" <?php if (isset($vs['yes'])): ?>
+                                    checked="checked";
+                                    <?php endif ?> value="<?php echo $vs['id'] ?>" name="Character[]" id="user-Character
+                                    " >
+                                    <?php echo $vs['name']; ?>
+                                </label>
+
+                                {/case}
+                                {/switch}
+                                {/volist}
+                            </dd>
+                        </div>
+                    </dl>
+                    {/eq}
+                    {/volist}
+                    <div class="row cl">
+                        <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                            <button type="submit" class="btn btn-success radius" id="admin-role-save"><i
+                                    class="icon-ok"></i> 确定
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </article>
+</div>
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__ADMINPUBLIC__/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+<!--/请在上方写此页面业务相关的脚本-->
+<script type="text/javascript">
+    $(function () {
+
+        $(".permission-list dt input:checkbox").click(function () {
+            $(this).closest("dl").find("dd input:checkbox").prop("checked", $(this).prop("checked"));
+        });
+        $(".per dd input:checkbox").click(function () {
+            var l = $(this).parent().parent().find("input:checked").length;
+            var l2 = $(this).parents(".permission-list").find(".per dd").find("input:checked").length;
+            if ($(this).prop("checked")) {
+                $(this).closest("dl").find("dt input:checkbox").prop("checked", true);
+                $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked", true);
+            } else {
+                if (l == 0) {
+                    $(this).closest("dl").find("dt input:checkbox").prop("checked", false);
+                }
+                if (l2 == 0) {
+                    $(this).parents(".permission-list").find("dt").first().find("input:checkbox").prop("checked", false);
+                }
+            }
+        });
+
+        $("#role_from").validate({
+            rules: {
+                roleName: {
+                    required: true,
+                },
+            },
+            onkeyup: false,
+            focusCleanup: true,
+            success: "valid",
+            submitHandler: function (form) {
+                $('#role_from').ajaxSubmit({
+                    type: 'post',
+                    dataType: 'json',
+                    url: "{:url('Admin/edit_role_s')}",
+                    success: function (data) {
+                        layer.msg(data.msg, {
+                                icon: 1,
+                                shade: 0.01,
+                                time: 2000
+                            },
+                            function () {
+                                top.location.reload();
+
+                            });
+                    },
+                    error: function (e) {
+                        console.log(e)
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

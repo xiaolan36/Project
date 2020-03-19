@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>分享好友</title>
+<link rel="stylesheet" href="__WCSS__/index.css" />
+<script src="__WJS__/jquery1.11.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript" src="__COM__/js/index.js" ></script>
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js" ></script>
+<script src="__WJS__/jquery.qrcode.min.js"></script>
+<link href="__WCSS__/mui.min.css" rel="stylesheet"/>
+<link href="__WCSS__/swiper.min.css" rel="stylesheet">
+<link href="__WCSS__/mystyle.css" rel="stylesheet">
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                if (clientWidth >= 750) {
+                    docEl.style.fontSize = '100px';
+                } else {
+                    docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                }
+            };
+        recalc();
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+        doc.addEventListener('DOMContentLoaded', recalc, false);
+    })(document, window);
+</script>
+<style>
+    body{
+        overflow: hidden;
+    }
+    .qrCodeGro canvas {
+        width: 30%;
+        height: auto;
+        margin: 70% auto 0;
+        display: block;
+        border: .08rem solid #fff;
+        border-radius: .1rem;
+    }
+    #qrcode{
+        position: fixed;
+        left: 50%;
+        width: 6.9rem;
+        margin-left: -3.45rem;
+        z-index: 99;
+    }
+    #yqm{
+        position: fixed;
+        z-index: 99;
+        margin-top: 100%;
+        left: 0;
+        width: 100%;
+        font-size: .24rem;
+        line-height: 1;
+        text-align: center;
+        color: #1A1A1A;
+    }
+    .header{
+        background:#fff;
+        top:0;
+        -webkit-box-shadow: 0 1px 6px #ccc;
+        box-shadow: 0 1px 6px #ccc;
+    }
+    .h1{
+        font-family:'微软雅黑';
+        color:#1a1a1a;
+    }
+    .header .mui-icon {
+        color: #1A1A1A;
+    }
+    .swiper-container{
+        width: 6.9rem;
+        height: 9.2rem;
+        border-radius: .2rem;
+        margin-top: 60px;
+        margin-left: .3rem;
+
+
+    }
+
+</style>
+<body style="position:reletive;">
+<header class="mui-bar mui-bar-nav header">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    <h1 class="mui-title h1">邀请新人拿佣金</h1>
+</header>
+<div class="swiper-container" style="height: 90%">
+    <div class="qrCodeGro qrCodeGroa"  id="qrcode"></div>
+    <span hidden id="txt">{$aurl}</span>
+    <span id="yqm">邀请码：{$u_ID}</span>
+    <img src="__WIMG__/yq.png" class="img">
+    <!-- Add Pagination -->
+
+</div>
+<script  type="text/javascript" src="__WJS__/swiper.min.js"></script>
+<script type="text/javascript">
+    var swiper = new Swiper('.swiper-container', {
+        loop: true
+    });
+    $().ready(function(){
+        $('#qrcode').qrcode($('#txt').text());
+    });
+    function copyUrl()
+    {
+        var txt=$("#txt").text();
+        copy(txt);
+    }
+
+    function copyYqm()
+    {
+        var txt=$("#yqm").text();
+        copy(txt);
+    }
+
+    function copy(message) {
+        var input = document.createElement("input");
+        input.value = message;
+        document.body.appendChild(input);
+        input.select();
+        input.setSelectionRange(0, input.value.length), document.execCommand('Copy');
+        document.body.removeChild(input);
+        msg_alert("复制成功");
+    }
+</script>
+
+</body>
+</html>
+

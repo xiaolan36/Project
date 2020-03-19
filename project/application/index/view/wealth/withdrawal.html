@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <title></title>
+
+    <link href="__WCSS__/mui.min.css" rel="stylesheet"/>
+    <link href="__WCSS__/mystyle.css" rel="stylesheet">
+    <script>
+        (function (doc, win) {
+            var docEl = doc.documentElement,
+                resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                recalc = function () {
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    if (clientWidth >= 750) {
+                        docEl.style.fontSize = '100px';
+                    } else {
+                        docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+                    }
+                };
+            recalc();
+            if (!doc.addEventListener) return;
+            win.addEventListener(resizeEvt, recalc, false);
+            doc.addEventListener('DOMContentLoaded', recalc, false);
+        })(document, window);
+    </script>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav header">
+    <div style="width:10%;float:left;">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="javascript:history.go(-1)"></a>
+    </div>
+    <div style="width:80%;float:left;">
+        <h1 class="mui-title czjilu">提现</h1>
+    </div>
+</header>
+
+<div class="chongbg">
+    <h3 class="hc-flex hc-align-center hc-justify-between"><span>账户余额：{$user.user_money_k}</span><em id="gorecharge">立即提现</em></h3>
+</div>
+
+<div class="chong-title"><em>-</em>
+    以下为您提现记录<em>-</em></div>
+<ul class="mui-table-view ul chong-list notborder">
+    {volist name="list" id="info" empty="$empty" }
+    <li class="mui-table-view-cell">
+        <p>
+            <span class="time"><?php echo date("Y-m-d H:i",$info['addtime']);?></span>
+        </p>
+        <p>
+            <span class="money">-<?php echo $info['money'];?><font style=" font-size: 11px;"></font></span>
+            {switch info.status}
+            {case 1}<span style="color: tomato">审核中</span>{/case}
+            {case 2}<span style="color: red">驳回</span>{/case}
+            {default /}<span style="color: #00B83F">审核通过</span>
+            {/switch}
+        </p>
+    </li>
+    {/volist}
+
+</ul>
+
+</body>
+<script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="__COM__/layer/layer.js"></script>
+<script type="text/javascript">
+    $("#gorecharge").click(function () {
+        window.location.href = "{:url('/wealth/send_withdrawal')}"
+    });
+</script>
+</html>

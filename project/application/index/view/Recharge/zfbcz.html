@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="__WJS__/mui.min.js"></script>
+    <link href="__WCSS__/mui.min.css" rel="stylesheet">
+    <script type="text/javascript" charset="utf-8">
+      	mui.init();
+    </script>
+	<style>
+		.body{
+			line-height: px;
+		}
+		.mui-table-view-cell:after{
+			left: 0px;
+			background-color:#292828;
+		}
+		.mui-table-view:before{
+			background-color:#292828;
+		}
+		.mui-table-view:after{
+			background-color:#292828;
+		}
+		.mui-input-group:before{
+			height:0px
+		}
+		.mui-input-group:after{
+			height:0px;
+		}
+		.header{
+			background:#1f253d;
+			top:0;
+			box-shadow:0 0px 0px #ccc;
+			-webkit-box-shadow:0 0px 0px #ccc;
+		}
+		.h1{
+			font-family:'微软雅黑';
+			color:#fff;
+		}
+		.divc{
+			background:#1f253d;
+			height:180px;
+			width:175px;
+			top:80px;
+			margin:auto;
+			left:0px;
+			right:0px;
+			border-radius:10px;
+			box-shadow:2px 0px 20px 0px #007AFF;
+		}
+		.img{
+			width:120px;
+			margin-left:26px;
+			margin-top:20px;
+		}
+		.span{
+			color:#fff;
+			font-family:'微软雅黑';
+			font-size:0.9em;
+			margin-left:16px;
+		}
+		.form{
+			top:120px;
+			height:0px;
+			width:80%;
+			left:0px;
+			right:0px;
+			margin:auto;
+		}
+		.divc1{
+			border-radius:30px;
+			background-color:#fff;
+			margin-bottom:30px;
+		}
+		.img1{
+			position:absolute;
+			width:35px;
+			margin-left:15px;
+			margin-top:4px;
+		}
+		.int{
+			color:#0062CC;
+			margin-top:10px;
+			margin-left:22%;
+			font-size:0.9em;
+			font-family:'微软雅黑';
+		}
+		.button{
+			line-height:2em;
+			font-size:0.9em;
+			width:80%;
+			font-family:'微软雅黑';
+			border-radius:30px;
+			border:0px solid;
+			background:linear-gradient(45deg,BLUE,purple);
+		}
+	</style>
+</head>
+<body style="background:#f2f2f2;">
+	<header class="mui-bar mui-bar-nav header">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title h1">支付宝充值</h1>
+	</header>	
+		<div class="mui-card-content divc">
+			<img src="../Public/home/wap/images/wx.png" class="img" />
+			<span class="span">打开支付宝，扫描二维码</span>
+		</div>
+			<form class="mui-input-group form"  name="AddUser" action="{:U('Recharge/alipay_rc')}" id="registerForm" >
+				<div class="mui-input-row divc1">
+					<img src="../Public/home/wap/images/nubmer.png"  class="img1" />
+					<input type="number" class="int"  name="uname" placeholder="充值姓名">
+				</div>
+				<div class="mui-input-row divc1">
+					<img src="../Public/home/wap/images/nubmer.png"  class="img1" />
+					<input type="number" class="int"  name="account"  placeholder="充值账号">
+				</div>
+				<div class="mui-input-row divc1">
+					<img src="../Public/home/wap/images/nubmer.png"  class="img1" />
+					<input type="number" class="int"  name="price" placeholder="充值金额">
+				</div>
+				<div class="mui-input-row divc1">
+					<img src="../Public/home/wap/images/nubmer.png"  class="img1" />
+					<input type="number" class="int"  name="marker" placeholder="选填备注">
+				</div>
+				<br>
+				<div class="mui-button-row">
+					<button type="button" class="mui-btn mui-btn-danger button"  id="submit"     onclick="alipaynow()" >提交</button>
+				</div>
+			</form>
+			<div class="mui-card-content" style="position: absolute; bottom: -300px; background:#1f253d;height: 200px; width: 110%; border-radius: 10px;box-shadow:2px 0px 20px 0px #007AFF;">
+				<span style="top: 160px; color: #ccc;font-family: '微软雅黑';font-size: 0.8em;left: 23px;">
+				充值注意事项<br>
+	
+				1.全天24小时可以转账充值；<br>
+	
+				2.禁止向上级递交保证金，否则出现资金问题，平台概不负责；<br>
+	
+				3.平台禁止代充，充值失败可以选择其他通道；<br>
+	
+				4.转账成功后，1-10分钟内可以到账，如遇充值高峰期，10-30分钟才能到账，可以联系导师处理。	
+				</span>
+			</div>
+	
+</body>
+ <script type="text/javascript" src="__COM__/js/jquery-1.9.1.min.js" ></script>
+ <script type="text/javascript" src="__COM__/layer/layer.js" ></script>
+ <script type="text/javascript">
+
+    function alipaynow(){
+        var thisform=document.forms['AddUser'];
+		var   uname=thisform.uname.value;
+        var   account=thisform.account.value;       
+        var   price=thisform.price.value;
+        var   marker=thisform.marker.value;
+
+        if(uname=='' || uname==null){
+            layer.msg('充值人姓名');
+            return false;
+        }
+		if(account=='' || account==null){
+            layer.msg('充值账号');
+            return false;
+        }
+		if(price=='' || price==null){
+            layer.msg('充值金额');
+            return false;
+        }
+		
+        var post_url = $("form[name='AddUser']").attr('action');
+        var post_data= $("form[name='AddUser']").serialize();
+		$("#submit").attr('disabled',true)
+        $.ajax({
+            type: "POST",
+            url: post_url,
+            data:post_data,
+            dataType: "json",
+            success: function(data){
+                if(data.status==1){
+                    layer.msg(data.msg);  //,data.url);
+					setTimeout(function (args) {
+						window.location.href = "{:U('Recharge/chongzhijilu')}";
+					}, 3000); 
+                }else{
+                    layer.msg(data.msg);
+                }
+            }
+        });
+    }
+
+</script>	
+</html>

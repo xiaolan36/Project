@@ -1,0 +1,148 @@
+<!-- 公共头部-->
+{include file="Public/_header" title="$title"/}
+<div class="Hui-admin-article">
+    <nav class="breadcrumb" style="background-color:#fff;padding: 0 24px">
+        首页
+        <span class="c-gray en">
+            /
+        </span>
+        报表管理
+        <span class="c-gray en">
+            /
+        </span>
+        银行卡充值统计
+    </nav>
+    <article class="Hui-admin-content clearfix">
+        <form action="{:url('Count/register_count')}" method="get">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="row clearfix">
+
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <div class="row clearfix mb-10">
+                                <span class="col-xs-4 form-item-label">
+                                    开始日期：
+                                </span>
+                                <span class="col-xs-8 form-item-control">
+                                    <input class="input-text datetimepicker-input" id="search-datetime-start"
+                                           name="start" type="text">
+                                    </input>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <div class="row clearfix mb-10">
+                                <span class="col-xs-4 form-item-label">
+                                    结束日期：
+                                </span>
+                                <span class="col-xs-8 form-item-control">
+                                    <input class="input-text datetimepicker-input" id="search-datetime-end" name="end"
+                                           type="text">
+                                    </input>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-4">
+                            <div class="row clearfix">
+                                <span class="col-xs-4 form-item-control">
+                                    <button class="btn btn-success radius" id="search-submit" name="" type="submit">
+                                        <i class="Hui-iconfont">
+                                            
+                                        </i>
+                                        搜索
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+        <div class="panel mt-20">
+            <div class="panel-body">
+                <div class="mt-20 clearfix">
+                    <table class="table table-border table-bordered table-bg table-hover table-sort"
+                           id="data-table-list">
+                        <thead>
+                        <tr class="text-c">
+                            <th width="80">
+                                时间日期
+                            </th>
+                            <th width="80">
+                                总笔数
+                            </th>
+                            <th width="80">
+                                总金额
+                            </th>
+                            <th width="80">
+                                已通过
+                            </th>
+                            <th width="80">
+                                未通过
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="getData-list" data-currpage="1">
+                        {volist name='data' id='data' empey='暂时没有数据'}
+                        <tr class="text-c">
+                            <td>
+                                {$data.time|date='Y-m-d'}
+                            </td>
+                            <td>
+                                {$data.bank_count}
+                            </td>
+                            <td>
+                                {$data.bank_money}
+                            </td>
+                            <td>
+                                {$data.bank_true}
+                            </td>
+                            <td>
+                                {$data.bank_false}
+                            </td>
+                        </tr>
+                        {/volist}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </article>
+</div>
+<script src="__ADMINPUBLIC__/static/business/js/main.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(function () {
+
+        runDatetimePicker(); // 实例化日期控件
+        getUrlParameter(); // 获取URL参数，初始化条件
+
+    });
+
+    function getRequest() {
+        var url = window.location.search; //获取url中"?"符后的字串
+        var theRequest = new Object();
+        if (url.indexOf("?") != -1) {
+            var str = url.substr(1);
+            strs = str.split("&");
+            for (var i = 0; i < strs.length; i++) {
+                //就是这句的问题
+                theRequest[strs[i].split("=")[0]] = decodeURI(strs[i].split("=")[1]);
+                //之前用了unescape()
+                //才会出现乱码
+            }
+        }
+        return theRequest;
+    }
+
+    // 获取URL参数，初始化条件
+    function getUrlParameter() {
+        var urlObj = getRequest();
+        $("#search-datetime-start").val(urlObj.start);
+        $("#search-datetime-end").val(urlObj.end);
+    }
+</script>
